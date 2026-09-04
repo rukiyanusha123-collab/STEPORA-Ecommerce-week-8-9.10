@@ -1,0 +1,201 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Nike Air Max",
+      "price": 4999,
+      "category": "Running",
+      "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
+      "description": "Comfortable running shoe",
+      "stock": 10
+    },
+    {
+      "id": "2",
+      "name": "Adidas Ultraboost",
+      "price": 5999,
+      "category": "Running",
+      "image": "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80",
+      "description": "Lightweight sports shoe",
+      "stock": 8
+    },
+    {
+      "id": "3",
+      "name": "Puma RS-X",
+      "price": 3999,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=800&q=80",
+      "description": "Stylish casual shoe",
+      "stock": 12
+    },
+    {
+      "id": "4",
+      "name": "Nike Air Force 1",
+      "price": 6999,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic everyday sneaker",
+      "stock": 15
+    },
+    {
+      "id": "5",
+      "name": "Adidas Superstar",
+      "price": 5499,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?auto=format&fit=crop&w=800&q=80",
+      "description": "Iconic casual sneaker",
+      "stock": 11
+    },
+    {
+      "id": "6",
+      "name": "Puma Suede Classic",
+      "price": 4499,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic suede lifestyle shoe",
+      "stock": 9
+    },
+    {
+      "id": "7",
+      "name": "Nike Air Jordan 1",
+      "price": 8499,
+      "category": "Sports",
+      "image": "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80",
+      "description": "Iconic basketball inspired sneaker",
+      "stock": 9
+    },
+    {
+      "id": "8",
+      "name": "New Balance 574",
+      "price": 6799,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic everyday lifestyle sneaker",
+      "stock": 14
+    },
+    {
+      "id": "9",
+      "name": "Converse Chuck Taylor",
+      "price": 4299,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1494496195158-c3becb4f2475?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic canvas casual shoe",
+      "stock": 16
+    },
+    {
+      "id": "10",
+      "name": "Nike Air Zoom",
+      "price": 7799,
+      "category": "Sports",
+      "image": "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=800&q=80",
+      "description": "Responsive sports performance shoe",
+      "stock": 7
+    },
+    {
+      "id": "11",
+      "name": "Adidas Grand Court",
+      "price": 4999,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80",
+      "description": "Clean and stylish everyday sneaker",
+      "stock": 12
+    },
+    {
+      "id": "12",
+      "name": "Puma Softride",
+      "price": 5299,
+      "category": "Running",
+      "image": "https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=800&q=80",
+      "description": "Soft cushioned running footwear",
+      "stock": 10
+    },
+    {
+      "id": "13",
+      "name": "Skechers Go Run",
+      "price": 4799,
+      "category": "Running",
+      "image": "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=800&q=80",
+      "description": "Lightweight cushioned running shoe",
+      "stock": 15
+    },
+    {
+      "id": "39",
+      "name": "Navy Sport Trainer",
+      "price": 5199,
+      "category": "Sports",
+      "image": "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=800&q=80",
+      "description": "Durable navy trainer for active lifestyles",
+      "stock": 10
+    },
+    {
+      "id": "15",
+      "name": "Asics Gel-Kayano",
+      "price": 8999,
+      "category": "Running",
+      "image": "https://images.unsplash.com/photo-1556906781-9a412961c28c?auto=format&fit=crop&w=800&q=80",
+      "description": "Supportive performance running shoe",
+      "stock": 8
+    },
+    {
+      "id": "16",
+      "name": "Nike Dunk Low",
+      "price": 7499,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80",
+      "description": "Modern street style sneaker",
+      "stock": 10
+    },
+    {
+      "id": "17",
+      "name": "Puma RS-X",
+      "price": 3999,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1543508282-6319a3e2621f?auto=format&fit=crop&w=800&q=80",
+      "description": "Stylish casual shoe",
+      "stock": 12
+    },
+    {
+      "id": "18",
+      "name": "Vans Old Skool",
+      "price": 4999,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic skate inspired sneaker",
+      "stock": 12
+    },
+    {
+      "id": "19",
+      "name": "Skechers Go Run",
+      "price": 4799,
+      "category": "Running",
+      "image": "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=800&q=80",
+      "description": "Lightweight cushioned running shoe",
+      "stock": 15
+    },
+    {
+      "id": "20",
+      "name": "Adidas Stan Smith",
+      "price": 5799,
+      "category": "Formal",
+      "image": "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=800&q=80",
+      "description": "Minimal classic everyday footwear",
+      "stock": 10
+    },
+    {
+      "id": "21",
+      "name": "K-Fashion Vintage Loafer",
+      "price": 5199,
+      "category": "Formal",
+      "image": "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=800&q=80",
+      "description": "Korean minimal square-toe vintage loafer",
+      "stock": 8
+    }
+  ],
+
+  "users": [],
+
+  "orders": [],
+
+  "carts": [],
+
+  "$schema": "./node_modules/json-server/schema.json"
+}
