@@ -5,7 +5,7 @@
       "name": "Nike Air Max",
       "price": 4999,
       "category": "Running",
-      "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
+      "image":"/images/adidas1.jpg",
       "description": "Comfortable running shoe",
       "stock": 10
     },
@@ -14,188 +14,707 @@
       "name": "Adidas Ultraboost",
       "price": 5999,
       "category": "Running",
-      "image": "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80",
-      "description": "Lightweight sports shoe",
-      "stock": 8
+      "image": "/images/asics26.jpg",
+      "description": "Lightweight running shoe with responsive cushioning",
+      "stock": 15
     },
     {
       "id": "3",
       "name": "Puma RS-X",
-      "price": 3999,
+      "price": 4499,
       "category": "Casual",
       "image": "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=800&q=80",
-      "description": "Stylish casual shoe",
+      "description": "Stylish casual sneaker for everyday wear",
       "stock": 12
     },
     {
       "id": "4",
-      "name": "Nike Air Force 1",
-      "price": 6999,
-      "category": "Casual",
-      "image": "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80",
-      "description": "Classic everyday sneaker",
-      "stock": 15
+      "name": "Nike Revolution 6",
+      "price": 3299,
+      "category": "Running",
+      "image": "/images/adidas3.jpg",
+      "description": "Lightweight shoe for daily running",
+      "stock": 18
     },
     {
       "id": "5",
-      "name": "Adidas Superstar",
-      "price": 5499,
+      "name": "Adidas Grand Court",
+      "price": 3799,
       "category": "Casual",
-      "image": "https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?auto=format&fit=crop&w=800&q=80",
-      "description": "Iconic casual sneaker",
-      "stock": 11
+      "image": "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic casual sneaker with a clean design",
+      "stock": 20
     },
     {
       "id": "6",
-      "name": "Puma Suede Classic",
-      "price": 4499,
-      "category": "Casual",
-      "image": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=80",
-      "description": "Classic suede lifestyle shoe",
-      "stock": 9
-    },
-    {
-      "id": "7",
-      "name": "Nike Air Jordan 1",
-      "price": 8499,
-      "category": "Sports",
+      "name": "Puma Softride",
+      "price": 3999,
+      "category": "Running",
       "image": "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80",
-      "description": "Iconic basketball inspired sneaker",
-      "stock": 9
-    },
-    {
-      "id": "8",
-      "name": "New Balance 574",
-      "price": 6799,
-      "category": "Casual",
-      "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
-      "description": "Classic everyday lifestyle sneaker",
+      "description": "Soft and comfortable running shoe",
       "stock": 14
     },
     {
+      "id": "7",
+      "name": "Nike Air Force 1",
+      "price": 6999,
+      "category": "Sneakers",
+      "image": "https://images.unsplash.com/photo-1584735175097-719d848f8449?auto=format&fit=crop&w=800&q=80",
+      "description": "Iconic everyday sneaker",
+      "stock": 8
+    },
+    {
+      "id": "8",
+      "name": "Adidas Forum Low",
+      "price": 5499,
+      "category": "Sneakers",
+      "image": "https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic low-top sneaker with modern styling",
+      "stock": 11
+    },
+    {
       "id": "9",
-      "name": "Converse Chuck Taylor",
+      "name": "Puma Suede Classic",
       "price": 4299,
-      "category": "Casual",
-      "image": "https://images.unsplash.com/photo-1494496195158-c3becb4f2475?auto=format&fit=crop&w=800&q=80",
-      "description": "Classic canvas casual shoe",
+      "category": "Sneakers",
+      "image": "/images/adidas4.jpg",
+      "description": "Classic suede sneaker for casual outfits",
       "stock": 16
     },
     {
       "id": "10",
-      "name": "Nike Air Zoom",
-      "price": 7799,
-      "category": "Sports",
-      "image": "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=800&q=80",
-      "description": "Responsive sports performance shoe",
-      "stock": 7
+      "name": "New Balance 574",
+      "price": 5799,
+      "category": "Casual",
+      "image": "/images/asics28.jpg",
+      "description": "Comfortable everyday lifestyle shoe",
+      "stock": 13
     },
     {
       "id": "11",
-      "name": "Adidas Grand Court",
-      "price": 4999,
-      "category": "Casual",
-      "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80",
-      "description": "Clean and stylish everyday sneaker",
-      "stock": 12
+      "name": "Nike Pegasus",
+      "price": 6499,
+      "category": "Running",
+      "image":"/images/adidas5.jpg",
+      "description": "Responsive running shoe for everyday training",
+      "stock": 9
     },
     {
       "id": "12",
-      "name": "Puma Softride",
-      "price": 5299,
+      "name": "Adidas Duramo",
+      "price": 3499,
       "category": "Running",
-      "image": "https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=800&q=80",
-      "description": "Soft cushioned running footwear",
-      "stock": 10
+      "image": "/images/asics13.jpg",
+      "description": "Affordable lightweight running shoe",
+      "stock": 17
     },
+  
     {
-      "id": "13",
-      "name": "Skechers Go Run",
-      "price": 4799,
-      "category": "Running",
-      "image": "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=800&q=80",
-      "description": "Lightweight cushioned running shoe",
-      "stock": 15
-    },
-    {
-      "id": "39",
-      "name": "Navy Sport Trainer",
-      "price": 5199,
-      "category": "Sports",
-      "image": "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=800&q=80",
-      "description": "Durable navy trainer for active lifestyles",
+      "id": "14",
+      "name": "Nike Court Vision",
+      "price": 4599,
+      "category": "Sneakers",
+      "image": "/images/adidas6.jpg",
+      "description": "Court-inspired casual sneaker",
       "stock": 10
     },
     {
       "id": "15",
-      "name": "Asics Gel-Kayano",
-      "price": 8999,
-      "category": "Running",
-      "image": "https://images.unsplash.com/photo-1556906781-9a412961c28c?auto=format&fit=crop&w=800&q=80",
-      "description": "Supportive performance running shoe",
-      "stock": 8
+      "name": "Adidas Superstar",
+      "price": 5299,
+      "category": "Sneakers",
+      "image":"/images/adidas7.jpg",
+      "description": "Classic sneaker with timeless styling",
+      "stock": 7
     },
     {
       "id": "16",
-      "name": "Nike Dunk Low",
-      "price": 7499,
+      "name": "Puma Caven",
+      "price": 3899,
       "category": "Casual",
-      "image": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80",
-      "description": "Modern street style sneaker",
-      "stock": 10
+      "image":"/images/asics29.jpg",
+      "description": "Clean and comfortable casual sneaker",
+      "stock": 19
     },
     {
       "id": "17",
-      "name": "Puma RS-X",
-      "price": 3999,
+      "name": "Reebok Classic",
+      "price": 4199,
       "category": "Casual",
-      "image": "https://images.unsplash.com/photo-1543508282-6319a3e2621f?auto=format&fit=crop&w=800&q=80",
-      "description": "Stylish casual shoe",
+      "image": "/images/nike1.jpg",
+      "description": "Retro-inspired everyday sneaker",
       "stock": 12
     },
     {
       "id": "18",
-      "name": "Vans Old Skool",
-      "price": 4999,
-      "category": "Casual",
-      "image": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=80",
-      "description": "Classic skate inspired sneaker",
-      "stock": 12
-    },
-    {
-      "id": "19",
-      "name": "Skechers Go Run",
-      "price": 4799,
+      "name": "New Balance Fresh Foam",
+      "price": 6299,
       "category": "Running",
-      "image": "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=800&q=80",
-      "description": "Lightweight cushioned running shoe",
-      "stock": 15
-    },
-    {
-      "id": "20",
-      "name": "Adidas Stan Smith",
-      "price": 5799,
-      "category": "Formal",
-      "image": "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=800&q=80",
-      "description": "Minimal classic everyday footwear",
+      "image": "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=800&q=80",
+      "description": "Soft cushioned running shoe",
       "stock": 10
     },
     {
-      "id": "21",
-      "name": "K-Fashion Vintage Loafer",
-      "price": 5199,
-      "category": "Formal",
-      "image": "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=800&q=80",
-      "description": "Korean minimal square-toe vintage loafer",
+      "id": "19",
+      "name": "Nike Downshifter",
+      "price": 3599,
+      "category": "Running",
+      "image": "/images/adidas8.jpg",
+      "description": "Lightweight training and running shoe",
+      "stock": 22
+    },
+    {
+      "id": "20",
+      "name": "Adidas Lite Racer",
+      "price": 2999,
+      "category": "Running",
+      "image": "/images/nike2.jpg",
+      "description": "Lightweight shoe for active lifestyles",
+      "stock": 25
+    },
+    {
+      "id": "23",
+      "name": "Puma Future Rider",
+      "price": 4799,
+      "category": "Casual",
+      "image": "https://images.unsplash.com/photo-1543508282-6319a3e2621f?auto=format&fit=crop&w=800&q=80",
+      "description": "Retro running-inspired casual sneaker",
+      "stock": 14
+    },
+    {
+      "id": "24",
+      "name": "Reebok Nano X",
+      "price": 6999,
+      "category": "Training",
+      "image":"/images/asics30.jpg",
+      "description": "Stable training shoe for gym workouts",
       "stock": 8
+    },
+    {
+      "id": "25",
+      "name": "Nike Metcon 8",
+      "price": 7999,
+      "category": "Training",
+      "image":  "/images/nike3.jpg",
+      "description": "Durable training shoe for intense workouts",
+      "stock": 7
+    },
+    {
+      "id": "26",
+      "name": "Adidas Dropset",
+      "price": 6799,
+      "category": "Training",
+      "image":  "/images/nike4.jpg",
+      "description": "Supportive shoe designed for strength training",
+      "stock": 10
+    },
+    {
+      "id": "27",
+      "name": "Puma Fuse",
+      "price": 5499,
+      "category": "Training",
+      "image": "/images/nike5.jpg",
+      "description": "Flexible training shoe for gym sessions",
+      "stock": 13
+    },
+    {
+      "id": "28",
+      "name": "Nike Infinity Run",
+      "price": 7299,
+      "category": "Running",
+      "image":  "/images/nike6.jpg",
+      "description": "Cushioned running shoe for long distances",
+      "stock": 9
+    },
+    {
+      "id": "29",
+      "name": "Adidas Solar Glide",
+      "price": 7199,
+      "category": "Running",
+      "image": "/images/nike7.jpg",
+      "description": "Comfortable shoe for daily road running",
+      "stock": 11
+    },
+    {
+      "id": "30",
+      "name": "Puma Velocity Nitro",
+      "price": 6599,
+      "category": "Running",
+      "image":  "/images/nike8.jpg",
+      "description": "Responsive running shoe with lightweight cushioning",
+      "stock": 12
+    },
+    {
+      "id": "31",
+      "name": "Nike Dunk Low",
+      "price": 7499,
+      "category": "Sneakers",
+      "image": "/images/nike9.jpg",
+      "description": "Low-top sneaker with a clean streetwear look",
+      "stock": 5
+    },
+    {
+      "id": "32",
+      "name": "Adidas Campus 00s",
+      "price": 6299,
+      "category": "Sneakers",
+      "image":  "/images/nike10.jpg",
+      "description": "Retro-inspired sneaker for casual styling",
+      "stock": 9
+    },
+    {
+      "id": "33",
+      "name": "Puma Palermo",
+      "price": 4999,
+      "category": "Sneakers",
+      "image": "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic terrace-style sneaker",
+      "stock": 14
+    },
+    {
+      "id": "34",
+      "name": "Reebok Club C",
+      "price": 4499,
+      "category": "Casual",
+      "image":  "/images/nike11.jpg",
+      "description": "Minimal everyday sneaker with classic styling",
+      "stock": 16
+    },
+    {
+      "id": "35",
+      "name": "New Balance 327",
+      "price": 5999,
+      "category": "Casual",
+      "image":  "/images/nike12.jpg",
+      "description": "Retro-inspired lifestyle shoe",
+      "stock": 12
+    },
+    {
+      "id": "38",
+      "name": "Puma Deviate Nitro",
+      "price": 7399,
+      "category": "Running",
+      "image":  "/images/puma1.jpg",
+      "description": "Fast and responsive shoe for runners",
+      "stock": 8
+    },
+    {
+      "id": "39",
+      "name": "Nike Zoom Fly",
+      "price": 8299,
+      "category": "Running",
+      "image": "/images/puma2.jpg",
+      "description": "Performance shoe designed for speed",
+      "stock": 6
+    },
+    {
+      "id": "40",
+      "name": "Adidas Adistar",
+      "price": 6999,
+      "category": "Running",
+      "image": "/images/puma3.jpg",
+      "description": "Comfortable long-distance running shoe",
+      "stock": 11
+    },
+    {
+      "id": "41",
+      "name": "Nike Pegasus Trail",
+      "price": 7199,
+      "category": "Outdoor",
+      "image": "/images/puma4.jpg",
+      "description": "Versatile shoe for trail and outdoor running",
+      "stock": 9
+    },
+    {
+      "id": "42",
+      "name": "Adidas Terrex Swift",
+      "price": 7899,
+      "category": "Outdoor",
+      "image": "/images/puma6.jpg",
+      "description": "Durable outdoor shoe for adventurous trails",
+      "stock": 6
+    },
+    {
+      "id": "43",
+      "name": "Puma Voyage Nitro",
+      "price": 6799,
+      "category": "Outdoor",
+      "image": "/images/puma7.jpg",
+      "description": "Trail shoe with reliable grip and comfort",
+      "stock": 8
+    },
+    {
+      "id": "44",
+      "name": "Reebok Trailgrip",
+      "price": 5299,
+      "category": "Outdoor",
+      "image": "/images/puma5.jpg",
+      "description": "Outdoor sneaker with durable traction",
+      "stock": 13
+    },
+    {
+      "id": "45",
+      "name": "New Balance Hierro",
+      "price": 7499,
+      "category": "Outdoor",
+      "image": "/images/puma8.jpg",
+      "description": "Comfortable trail shoe for outdoor adventures",
+      "stock": 7
+    },
+    {
+      "id": "46",
+      "name": "Nike Court Legacy",
+      "price": 3999,
+      "category": "Casual",
+      "image": "/images/puma9.jpg",
+      "description": "Simple everyday casual sneaker",
+      "stock": 18
+    },
+    {
+      "id": "47",
+      "name": "Adidas Advantage",
+      "price": 3599,
+      "category": "Casual",
+      "image": "/images/puma10.jpg",
+      "description": "Clean tennis-inspired lifestyle shoe",
+      "stock": 21
+    },
+    {
+      "id": "48",
+      "name": "Puma Smash V2",
+      "price": 3499,
+      "category": "Casual",
+      "image": "/images/puma11.jpg",
+      "description": "Classic casual sneaker for everyday use",
+      "stock": 15
+    },
+    {
+      "id": "49",
+      "name": "Reebok Royal Complete",
+      "price": 3299,
+      "category": "Casual",
+      "image": "/images/puma12.jpg",
+      "description": "Comfortable tennis-style casual shoe",
+      "stock": 17
+    },
+    {
+      "id": "50",
+      "name": "New Balance 237",
+      "price": 4799,
+      "category": "Casual",
+      "image": "/images/puma13.jpg",
+      "description": "Retro casual shoe with modern comfort",
+      "stock": 14
+    },
+    {
+      "id": "51",
+      "name": "Nike Air Zoom",
+      "price": 6799,
+      "category": "Running",
+      "image": "/images/puma14.jpg",
+      "description": "Responsive running shoe for active days",
+      "stock": 10
+    },
+    {
+      "id": "53",
+      "name": "Puma Electrify Nitro",
+      "price": 4799,
+      "category": "Running",
+      "image":"/images/puma15.jpg",
+      "description": "Lightweight shoe for daily running",
+      "stock": 16
+    },
+    {
+      "id": "54",
+      "name": "Nike Renew Ride",
+      "price": 4299,
+      "category": "Running",
+      "image": "/images/puma16.jpg",
+      "description": "Soft and comfortable shoe for everyday runs",
+      "stock": 19
+    },
+    {
+      "id": "55",
+      "name": "Adidas Response Super",
+      "price": 5599,
+      "category": "Running",
+      "image": "/images/asics1.jpg",
+      "description": "Cushioned shoe for comfortable daily running",
+      "stock": 12
+    },
+    {
+      "id": "56",
+      "name": "Puma Retaliate",
+      "price": 4499,
+      "category": "Training",
+      "image":  "/images/asics2.jpg",
+      "description": "Flexible training shoe for gym workouts",
+      "stock": 11
+    },
+    {
+      "id": "57",
+      "name": "Nike Free Run",
+      "price": 5999,
+      "category": "Training",
+      "image":  "/images/asics3.jpg",
+      "description": "Flexible shoe for natural movement and workouts",
+      "stock": 9
+    },
+    {
+      "id": "58",
+      "name": "Adidas Rapidmove",
+      "price": 5799,
+      "category": "Training",
+      "image":  "/images/asics4.jpg",
+      "description": "Stable training shoe for active movement",
+      "stock": 13
+    },
+    {
+      "id": "59",
+      "name": "Reebok Flexagon",
+      "price": 3999,
+      "category": "Training",
+      "image":  "/images/asics5.jpg",
+      "description": "Lightweight training shoe for gym sessions",
+      "stock": 20
+    },
+    {
+      "id": "60",
+      "name": "New Balance Arishi",
+      "price": 3899,
+      "category": "Training",
+      "image":  "/images/asics6.jpg",
+      "description": "Comfortable athletic shoe for everyday workouts",
+      "stock": 15
+    },
+    {
+      "id": "61",
+      "name": "Nike Street Runner",
+      "price": 4299,
+      "category": "Sneakers",
+      "image":  "/images/asics31.jpg",
+      "description": "Modern street-style sneaker",
+      "stock": 14
+    },
+    {
+      "id": "62",
+      "name": "Adidas Streetball",
+      "price": 6499,
+      "category": "Sneakers",
+      "image":  "/images/asics8.jpg",
+      "description": "Bold sneaker inspired by street culture",
+      "stock": 8
+    },
+    {
+      "id": "63",
+      "name": "Puma Slipstream",
+      "price": 5799,
+      "category": "Sneakers",
+      "image":  "/images/asics9.jpg",
+      "description": "Retro basketball-inspired lifestyle sneaker",
+      "stock": 10
+    },
+    {
+      "id": "64",
+      "name": "Reebok BB 4000",
+      "price": 5299,
+      "category": "Sneakers",
+      "image":  "/images/asics10.jpg",
+      "description": "Classic basketball-inspired sneaker",
+      "stock": 12
+    },
+    {
+      "id": "65",
+      "name": "New Balance 550",
+      "price": 6799,
+      "category": "Sneakers",
+      "image": "/images/asics11.jpg",
+      "description": "Classic basketball-style sneaker",
+      "stock": 7
+    },
+    {
+      "id": "66",
+      "name": "Nike SB Chron",
+      "price": 4599,
+      "category": "Skate",
+      "image": "/images/asics13.jpg",
+      "description": "Casual skate shoe with flexible comfort",
+      "stock": 11
+    },
+    {
+      "id": "67",
+      "name": "Adidas Busenitz",
+      "price": 4999,
+      "category": "Skate",
+      "image":"/images/asics14.jpg",
+      "description": "Durable skate-inspired casual shoe",
+      "stock": 9
+    },
+    {
+      "id": "68",
+      "name": "Puma Suede Skate",
+      "price": 4399,
+      "category": "Skate",
+      "image":"/images/asics15.jpg",
+      "description": "Classic suede shoe for skate and street style",
+      "stock": 13
+    },
+    {
+      "id": "69",
+      "name": "Vans Old Skool",
+      "price": 4999,
+      "category": "Skate",
+      "image": "/images/asics16.jpg",
+      "description": "Iconic skate-inspired everyday sneaker",
+      "stock": 15
+    },
+    {
+      "id": "70",
+      "name": "Converse Chuck Taylor",
+      "price": 3999,
+      "category": "Casual",
+      "image": "/images/asics17.jpg",
+      "description": "Timeless canvas sneaker for everyday wear",
+      "stock": 20
+    },
+    {
+      "id": "71",
+      "name": "Nike Court Legacy Lift",
+      "price": 4799,
+      "category": "Casual",
+      "image": "/images/asics18.jpg",
+      "description": "Stylish elevated casual sneaker",
+      "stock": 12
+    },
+    {
+      "id": "72",
+      "name": "Adidas Alphabounce",
+      "price": 5299,
+      "category": "Running",
+      "image": "/images/asics19.jpg",
+      "description": "Comfortable cushioned shoe for active lifestyles",
+      "stock": 14
+    },
+    {
+      "id": "73",
+      "name": "Puma R78",
+      "price": 3699,
+      "category": "Casual",
+      "image": "/images/asics20.jpg",
+      "description": "Retro running-inspired casual sneaker",
+      "stock": 18
+    },
+    {
+      "id": "74",
+      "name": "Reebok Energen Plus",
+      "price": 3799,
+      "category": "Running",
+      "image": "/images/asics21.jpg",
+      "description": "Lightweight running shoe for daily activities",
+      "stock": 16
+    },
+    {
+      "id": "75",
+      "name": "New Balance 530",
+      "price": 6499,
+      "category": "Sneakers",
+      "image": "/images/asics22.jpg",
+      "description": "Retro-inspired sneaker with everyday comfort",
+      "stock": 10
+    },
+    {
+      "id": "76",
+      "name": "Nike Vomero",
+      "price": 7299,
+      "category": "Running",
+      "image": "/images/asics23.jpg",
+      "description": "Premium cushioned running shoe",
+      "stock": 8
+    },
+    {
+      "id": "77",
+      "name": "Adidas Response CL",
+      "price": 6199,
+      "category": "Sneakers",
+      "image": "/images/asics24.jpg",
+      "description": "Modern retro sneaker for everyday styling",
+      "stock": 13
     }
   ],
-
-  "users": [],
-
-  "orders": [],
-
-  "carts": [],
-
+  "users": [
+    {
+      "name": "Muaadh",
+      "email": "muaadh123@gmail.com",
+      "password": "muaadh123",
+      "role": "user",
+      "id": "WBCvmZ3mrmA"
+    },
+    {
+      "name": "admin",
+      "email": "admin123@gmail.com",
+      "password": "admin123",
+      "role": "admin",
+      "id": "03_iT_94hsU"
+    },
+    {
+      "name": "Rukiya Nusha",
+      "email": "rukiyanusha123@gmail.com",
+      "password": "rukiyanusha123",
+      "role": "user",
+      "id": "I6Tq6yGg840"
+    }
+  ],
+  "orders": [
+    {
+      "userId": "03_iT_94hsU",
+      "userEmail": "admin123@gmail.com",
+      "customer": {
+        "name": "Rukiya Nusha",
+        "address": "rose villa",
+        "city": "kusgdbac",
+        "pincode": "123454",
+        "phone": "2324354354"
+      },
+      "items": [
+        {
+          "id": "2",
+          "name": "Adidas Ultraboost",
+          "price": 5999,
+          "category": "Running",
+          "image": "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80",
+          "description": "Lightweight sports shoe",
+          "stock": 8,
+          "size": "6",
+          "quantity": 1
+        }
+      ],
+      "subtotal": 5999,
+      "shipping": 0,
+      "total": 5999,
+      "status": "Pending",
+      "date": "2026-09-04T16:36:27.070Z",
+      "id": "_yHw8_3zZLQ"
+    }
+  ],
+  "carts": [
+    {
+      "userId": "WBCvmZ3mrmA",
+      "userEmail": "muaadh123@gmail.com",
+      "items": [],
+      "id": "kU16ybkY8B8"
+    },
+    {
+      "userId": "WBCvmZ3mrmA",
+      "userEmail": "muaadh123@gmail.com",
+      "items": [],
+      "id": "6Jh3LEFNYB8"
+    },
+    {
+      "userId": "03_iT_94hsU",
+      "userEmail": "admin123@gmail.com",
+      "items": [],
+      "id": "aMBQeCgSYos"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

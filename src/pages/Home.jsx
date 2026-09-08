@@ -15,9 +15,21 @@ function Home() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // ================= LOADING =================
+
+  const [loading, setLoading] = useState(true);
+
+  // ================= INFINITE SCROLL =================
+
+  const [visibleCount, setVisibleCount] = useState(6);
+
+  // ================= FETCH PRODUCTS =================
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
+
         const response = await axios.get(
           "http://localhost:3000/products"
         );
@@ -25,11 +37,120 @@ function Home() {
         setProducts(response.data);
       } catch (error) {
         console.log("Error fetching products:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProducts();
   }, []);
+
+  // ================= CATEGORIES =================
+
+  const categories = [
+    "All",
+    ...new Set(
+      products
+        .map((product) => product.category)
+        .filter(Boolean)
+    ),
+  ];
+
+  // ================= FILTER PRODUCTS =================
+
+  const filteredProducts = products.filter((product) => {
+    const productName =
+      product.name?.toLowerCase() || "";
+
+    const searchText =
+      search.toLowerCase();
+
+    const matchesSearch =
+      productName.includes(searchText);
+
+    const matchesCategory =
+      category === "All" ||
+      product.category === category;
+
+    return (
+      matchesSearch &&
+      matchesCategory
+    );
+  });
+
+  // ================= SORT PRODUCTS =================
+
+  const sortedProducts = [
+    ...filteredProducts,
+  ].sort((a, b) => {
+    if (sort === "low") {
+      return (
+        Number(a.price) -
+        Number(b.price)
+      );
+    }
+
+    if (sort === "high") {
+      return (
+        Number(b.price) -
+        Number(a.price)
+      );
+    }
+
+    return 0;
+  });
+
+  // ================= VISIBLE PRODUCTS =================
+
+  const visibleProducts =
+    sortedProducts.slice(
+      0,
+      visibleCount
+    );
+
+  // ================= RESET SCROLL COUNT =================
+
+  useEffect(() => {
+    setVisibleCount(6);
+  }, [search, category, sort]);
+
+  // ================= INFINITE SCROLL =================
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight =
+        document.documentElement.scrollHeight;
+
+      if (
+        scrollTop + windowHeight >=
+        documentHeight - 200
+      ) {
+        setVisibleCount((prev) => {
+          if (prev < sortedProducts.length) {
+            return prev + 6;
+          }
+
+          return prev;
+        });
+      }
+    };
+
+    window.addEventListener(
+      "scroll",
+      handleScroll
+    );
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
+    };
+  }, [sortedProducts.length]);
+
+  // ================= LOGOUT =================
 
   const handleLogout = async () => {
     const user = JSON.parse(
@@ -52,7 +173,10 @@ function Home() {
         }
       }
     } catch (error) {
-      console.log("Logout cart clear error:", error);
+      console.log(
+        "Logout cart clear error:",
+        error
+      );
     }
 
     localStorage.removeItem("user");
@@ -61,6 +185,8 @@ function Home() {
 
     navigate("/login");
   };
+
+  // ================= NAVIGATION =================
 
   const scrollToProducts = () => {
     document
@@ -87,54 +213,48 @@ function Home() {
     setMenuOpen(false);
   };
 
-  const categories = [
-    "All",
-    ...new Set(
-      products
-        .map((product) => product.category)
-        .filter(Boolean)
-    ),
-  ];
+  // ================= SKELETON CARD =================
 
-  const filteredProducts = products.filter((product) => {
-    const productName =
-      product.name?.toLowerCase() || "";
-
-    const searchText =
-      search.toLowerCase();
-
-    const matchesSearch =
-      productName.includes(searchText);
-
-    const matchesCategory =
-      category === "All" ||
-      product.category === category;
-
+  const SkeletonCard = () => {
     return (
-      matchesSearch &&
-      matchesCategory
+      <div className="bg-white rounded-2xl overflow-hidden shadow-sm animate-pulse">
+
+        {/* IMAGE SKELETON */}
+
+        <div className="h-56 sm:h-64 bg-gray-200"></div>
+
+        {/* CONTENT SKELETON */}
+
+        <div className="p-5 sm:p-6">
+
+          {/* CATEGORY */}
+
+          <div className="h-4 bg-gray-200 rounded w-1/4 mb-3"></div>
+
+          {/* NAME */}
+
+          <div className="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
+
+          <div className="h-6 bg-gray-200 rounded w-1/2 mb-5"></div>
+
+          {/* PRICE + STOCK */}
+
+          <div className="flex justify-between mb-5">
+
+            <div className="h-6 bg-gray-200 rounded w-1/4"></div>
+
+            <div className="h-4 bg-gray-200 rounded w-1/5"></div>
+
+          </div>
+
+          {/* BUTTON */}
+
+          <div className="h-12 bg-gray-200 rounded-xl"></div>
+
+        </div>
+      </div>
     );
-  });
-
-  const sortedProducts = [
-    ...filteredProducts,
-  ].sort((a, b) => {
-    if (sort === "low") {
-      return (
-        Number(a.price) -
-        Number(b.price)
-      );
-    }
-
-    if (sort === "high") {
-      return (
-        Number(b.price) -
-        Number(a.price)
-      );
-    }
-
-    return 0;
-  });
+  };
 
   return (
     <div className="min-h-screen bg-[#F8F1E8] overflow-x-hidden">
@@ -147,7 +267,7 @@ function Home() {
 
           <div className="flex items-center justify-between min-h-[72px]">
 
-            {/* LOGO + STEPORA */}
+            {/* LOGO */}
 
             <div className="flex items-center gap-2 sm:gap-3">
 
@@ -424,18 +544,32 @@ function Home() {
 
         </div>
 
-        {/* PRODUCT COUNT */}
+        {/* ================= PRODUCT COUNT ================= */}
 
-        <p className="text-gray-500 mb-5 sm:mb-6">
-          Showing {sortedProducts.length} product
-          {sortedProducts.length !== 1
-            ? "s"
-            : ""}
-        </p>
+        {!loading && (
+          <p className="text-gray-500 mb-5 sm:mb-6">
+            Showing {visibleProducts.length} of{" "}
+            {sortedProducts.length} products
+          </p>
+        )}
 
-        {/* ================= NO PRODUCTS ================= */}
+        {/* ================= SKELETON LOADING ================= */}
 
-        {sortedProducts.length === 0 ? (
+        {loading ? (
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7 lg:gap-8">
+
+            {[1, 2, 3, 4, 5, 6].map(
+              (item) => (
+                <SkeletonCard key={item} />
+              )
+            )}
+
+          </div>
+
+        ) : sortedProducts.length === 0 ? (
+
+          /* ================= NO PRODUCTS ================= */
 
           <div className="bg-white rounded-2xl p-8 sm:p-12 text-center">
 
@@ -455,69 +589,106 @@ function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7 lg:gap-8">
 
-            {sortedProducts.map((product) => (
+            {visibleProducts.map(
+              (product) => (
 
-              <div
-                key={product.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
-              >
+                <div
+                  key={product.id}
+                  className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
+                >
 
-                {/* PRODUCT IMAGE */}
+                  {/* PRODUCT IMAGE */}
 
-                <div className="h-56 sm:h-64 bg-[#F5F0EA] flex items-center justify-center p-5 sm:p-6">
+                  <div className="h-56 sm:h-64 bg-[#F5F0EA] flex items-center justify-center p-5 sm:p-6">
 
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-contain"
-                  />
-
-                </div>
-
-                {/* PRODUCT INFO */}
-
-                <div className="p-5 sm:p-6">
-
-                  <p className="text-sm text-[#7A3039] font-medium mb-2">
-                    {product.category}
-                  </p>
-
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 min-h-[28px] sm:min-h-[30px]">
-                    {product.name}
-                  </h3>
-
-                  <div className="flex items-center justify-between gap-3 mb-5">
-
-                    <p className="text-xl sm:text-2xl font-bold text-[#7A3039]">
-                      ₹{product.price}
-                    </p>
-
-                    <p className="text-xs sm:text-sm text-gray-500 whitespace-nowrap">
-                      Stock: {product.stock}
-                    </p>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-contain"
+                    />
 
                   </div>
 
-                  <button
-                    onClick={() =>
-                      navigate(
-                        `/product/${product.id}`
-                      )
-                    }
-                    className="w-full bg-[#7A3039] text-white py-3 rounded-xl font-semibold hover:bg-[#64252D] transition"
-                  >
-                    View Details
-                  </button>
+                  {/* PRODUCT INFO */}
+
+                  <div className="p-5 sm:p-6">
+
+                    <p className="text-sm text-[#7A3039] font-medium mb-2">
+                      {product.category}
+                    </p>
+
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 min-h-[28px] sm:min-h-[30px]">
+                      {product.name}
+                    </h3>
+
+                    <div className="flex items-center justify-between gap-3 mb-5">
+
+                      <p className="text-xl sm:text-2xl font-bold text-[#7A3039]">
+                        ₹{product.price}
+                      </p>
+
+                      <p className="text-xs sm:text-sm text-gray-500 whitespace-nowrap">
+                        Stock: {product.stock}
+                      </p>
+
+                    </div>
+
+                    <button
+                      onClick={() =>
+                        navigate(
+                          `/product/${product.id}`
+                        )
+                      }
+                      className="w-full bg-[#7A3039] text-white py-3 rounded-xl font-semibold hover:bg-[#64252D] transition"
+                    >
+                      View Details
+                    </button>
+
+                  </div>
 
                 </div>
 
-              </div>
-
-            ))}
+              )
+            )}
 
           </div>
 
         )}
+
+        {/* ================= INFINITE SCROLL MESSAGE ================= */}
+
+        {!loading &&
+          visibleProducts.length <
+            sortedProducts.length && (
+
+            <div className="text-center py-10">
+
+              <div className="inline-flex items-center gap-3 text-gray-500">
+
+                <div className="w-5 h-5 border-2 border-gray-300 border-t-[#7A3039] rounded-full animate-spin"></div>
+
+                <span>
+                  Scroll down to load more shoes...
+                </span>
+
+              </div>
+
+            </div>
+
+          )}
+
+        {/* ================= ALL PRODUCTS LOADED ================= */}
+
+        {!loading &&
+          sortedProducts.length > 0 &&
+          visibleProducts.length >=
+            sortedProducts.length && (
+
+            <p className="text-center text-gray-400 py-10">
+              You have reached the end of the collection.
+            </p>
+
+          )}
 
       </section>
 

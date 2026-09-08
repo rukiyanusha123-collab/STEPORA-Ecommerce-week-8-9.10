@@ -17,7 +17,7 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* Authentication */}
+     
         <Route path="/" element={<Register />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
