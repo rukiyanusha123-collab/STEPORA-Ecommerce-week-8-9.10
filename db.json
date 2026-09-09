@@ -5,7 +5,7 @@
       "name": "Nike Air Max",
       "price": 4999,
       "category": "Running",
-      "image":"/images/adidas1.jpg",
+      "image": "/images/adidas1.jpg",
       "description": "Comfortable running shoe",
       "stock": 10
     },
@@ -95,7 +95,7 @@
       "name": "Nike Pegasus",
       "price": 6499,
       "category": "Running",
-      "image":"/images/adidas5.jpg",
+      "image": "/images/adidas5.jpg",
       "description": "Responsive running shoe for everyday training",
       "stock": 9
     },
@@ -108,7 +108,6 @@
       "description": "Affordable lightweight running shoe",
       "stock": 17
     },
-  
     {
       "id": "14",
       "name": "Nike Court Vision",
@@ -123,7 +122,7 @@
       "name": "Adidas Superstar",
       "price": 5299,
       "category": "Sneakers",
-      "image":"/images/adidas7.jpg",
+      "image": "/images/adidas7.jpg",
       "description": "Classic sneaker with timeless styling",
       "stock": 7
     },
@@ -132,7 +131,7 @@
       "name": "Puma Caven",
       "price": 3899,
       "category": "Casual",
-      "image":"/images/asics29.jpg",
+      "image": "/images/asics29.jpg",
       "description": "Clean and comfortable casual sneaker",
       "stock": 19
     },
@@ -186,7 +185,7 @@
       "name": "Reebok Nano X",
       "price": 6999,
       "category": "Training",
-      "image":"/images/asics30.jpg",
+      "image": "/images/asics30.jpg",
       "description": "Stable training shoe for gym workouts",
       "stock": 8
     },
@@ -195,7 +194,7 @@
       "name": "Nike Metcon 8",
       "price": 7999,
       "category": "Training",
-      "image":  "/images/nike3.jpg",
+      "image": "/images/nike3.jpg",
       "description": "Durable training shoe for intense workouts",
       "stock": 7
     },
@@ -204,7 +203,7 @@
       "name": "Adidas Dropset",
       "price": 6799,
       "category": "Training",
-      "image":  "/images/nike4.jpg",
+      "image": "/images/nike4.jpg",
       "description": "Supportive shoe designed for strength training",
       "stock": 10
     },
@@ -222,7 +221,7 @@
       "name": "Nike Infinity Run",
       "price": 7299,
       "category": "Running",
-      "image":  "/images/nike6.jpg",
+      "image": "/images/nike6.jpg",
       "description": "Cushioned running shoe for long distances",
       "stock": 9
     },
@@ -240,7 +239,7 @@
       "name": "Puma Velocity Nitro",
       "price": 6599,
       "category": "Running",
-      "image":  "/images/nike8.jpg",
+      "image": "/images/nike8.jpg",
       "description": "Responsive running shoe with lightweight cushioning",
       "stock": 12
     },
@@ -258,7 +257,7 @@
       "name": "Adidas Campus 00s",
       "price": 6299,
       "category": "Sneakers",
-      "image":  "/images/nike10.jpg",
+      "image": "/images/nike10.jpg",
       "description": "Retro-inspired sneaker for casual styling",
       "stock": 9
     },
@@ -276,7 +275,7 @@
       "name": "Reebok Club C",
       "price": 4499,
       "category": "Casual",
-      "image":  "/images/nike11.jpg",
+      "image": "/images/nike11.jpg",
       "description": "Minimal everyday sneaker with classic styling",
       "stock": 16
     },
@@ -285,7 +284,7 @@
       "name": "New Balance 327",
       "price": 5999,
       "category": "Casual",
-      "image":  "/images/nike12.jpg",
+      "image": "/images/nike12.jpg",
       "description": "Retro-inspired lifestyle shoe",
       "stock": 12
     },
@@ -294,7 +293,7 @@
       "name": "Puma Deviate Nitro",
       "price": 7399,
       "category": "Running",
-      "image":  "/images/puma1.jpg",
+      "image": "/images/puma1.jpg",
       "description": "Fast and responsive shoe for runners",
       "stock": 8
     },
@@ -420,7 +419,7 @@
       "name": "Puma Electrify Nitro",
       "price": 4799,
       "category": "Running",
-      "image":"/images/puma15.jpg",
+      "image": "/images/puma15.jpg",
       "description": "Lightweight shoe for daily running",
       "stock": 16
     },
@@ -447,7 +446,7 @@
       "name": "Puma Retaliate",
       "price": 4499,
       "category": "Training",
-      "image":  "/images/asics2.jpg",
+      "image": "/images/asics2.jpg",
       "description": "Flexible training shoe for gym workouts",
       "stock": 11
     },
@@ -456,7 +455,7 @@
       "name": "Nike Free Run",
       "price": 5999,
       "category": "Training",
-      "image":  "/images/asics3.jpg",
+      "image": "/images/asics3.jpg",
       "description": "Flexible shoe for natural movement and workouts",
       "stock": 9
     },
@@ -465,7 +464,7 @@
       "name": "Adidas Rapidmove",
       "price": 5799,
       "category": "Training",
-      "image":  "/images/asics4.jpg",
+      "image": "/images/asics4.jpg",
       "description": "Stable training shoe for active movement",
       "stock": 13
     },
@@ -474,7 +473,7 @@
       "name": "Reebok Flexagon",
       "price": 3999,
       "category": "Training",
-      "image":  "/images/asics5.jpg",
+      "image": "/images/asics5.jpg",
       "description": "Lightweight training shoe for gym sessions",
       "stock": 20
     },
@@ -483,7 +482,7 @@
       "name": "New Balance Arishi",
       "price": 3899,
       "category": "Training",
-      "image":  "/images/asics6.jpg",
+      "image": "/images/asics6.jpg",
       "description": "Comfortable athletic shoe for everyday workouts",
       "stock": 15
     },
@@ -492,7 +491,7 @@
       "name": "Nike Street Runner",
       "price": 4299,
       "category": "Sneakers",
-      "image":  "/images/asics31.jpg",
+      "image": "/images/asics31.jpg",
       "description": "Modern street-style sneaker",
       "stock": 14
     },
@@ -501,7 +500,7 @@
       "name": "Adidas Streetball",
       "price": 6499,
       "category": "Sneakers",
-      "image":  "/images/asics8.jpg",
+      "image": "/images/asics8.jpg",
       "description": "Bold sneaker inspired by street culture",
       "stock": 8
     },
@@ -510,7 +509,7 @@
       "name": "Puma Slipstream",
       "price": 5799,
       "category": "Sneakers",
-      "image":  "/images/asics9.jpg",
+      "image": "/images/asics9.jpg",
       "description": "Retro basketball-inspired lifestyle sneaker",
       "stock": 10
     },
@@ -519,7 +518,7 @@
       "name": "Reebok BB 4000",
       "price": 5299,
       "category": "Sneakers",
-      "image":  "/images/asics10.jpg",
+      "image": "/images/asics10.jpg",
       "description": "Classic basketball-inspired sneaker",
       "stock": 12
     },
@@ -546,7 +545,7 @@
       "name": "Adidas Busenitz",
       "price": 4999,
       "category": "Skate",
-      "image":"/images/asics14.jpg",
+      "image": "/images/asics14.jpg",
       "description": "Durable skate-inspired casual shoe",
       "stock": 9
     },
@@ -555,7 +554,7 @@
       "name": "Puma Suede Skate",
       "price": 4399,
       "category": "Skate",
-      "image":"/images/asics15.jpg",
+      "image": "/images/asics15.jpg",
       "description": "Classic suede shoe for skate and street style",
       "stock": 13
     },
@@ -643,31 +642,31 @@
   ],
   "users": [
     {
+      "id": "WBCvmZ3mrmA",
       "name": "Muaadh",
       "email": "muaadh123@gmail.com",
       "password": "muaadh123",
-      "role": "user",
-      "id": "WBCvmZ3mrmA"
+      "role": "user"
     },
     {
-      "name": "admin",
-      "email": "admin123@gmail.com",
+      "id": "admin1",
+      "name": "STEPORA Admin",
+      "email": "admin@stepora.com",
       "password": "admin123",
-      "role": "admin",
-      "id": "03_iT_94hsU"
+      "role": "admin"
     },
     {
+      "id": "I6Tq6yGg840",
       "name": "Rukiya Nusha",
       "email": "rukiyanusha123@gmail.com",
       "password": "rukiyanusha123",
-      "role": "user",
-      "id": "I6Tq6yGg840"
+      "role": "user"
     }
   ],
   "orders": [
     {
-      "userId": "03_iT_94hsU",
-      "userEmail": "admin123@gmail.com",
+      "userId": "I6Tq6yGg840",
+      "userEmail": "rukiyanusha123@gmail.com",
       "customer": {
         "name": "Rukiya Nusha",
         "address": "rose villa",
@@ -681,9 +680,9 @@
           "name": "Adidas Ultraboost",
           "price": 5999,
           "category": "Running",
-          "image": "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80",
-          "description": "Lightweight sports shoe",
-          "stock": 8,
+          "image": "/images/asics26.jpg",
+          "description": "Lightweight running shoe with responsive cushioning",
+          "stock": 15,
           "size": "6",
           "quantity": 1
         }
@@ -710,10 +709,22 @@
       "id": "6Jh3LEFNYB8"
     },
     {
-      "userId": "03_iT_94hsU",
-      "userEmail": "admin123@gmail.com",
+      "userId": "admin1",
+      "userEmail": "admin@stepora.com",
       "items": [],
       "id": "aMBQeCgSYos"
+    },
+    {
+      "userId": "I6Tq6yGg840",
+      "userEmail": "rukiyanusha123@gmail.com",
+      "items": [],
+      "id": "7tZ2pLj7BEk"
+    },
+    {
+      "userId": "I6Tq6yGg840",
+      "userEmail": "rukiyanusha123@gmail.com",
+      "items": [],
+      "id": "IQ6Y6-uPZ9E"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

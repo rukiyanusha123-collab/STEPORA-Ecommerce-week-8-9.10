@@ -81,7 +81,15 @@ function Login() {
     setShowPopup(false);
 
     if (success) {
-      navigate("/home");
+      const userData = JSON.parse(
+        localStorage.getItem("user")
+      );
+
+      if (userData.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/home");
+      }
     }
   };
 

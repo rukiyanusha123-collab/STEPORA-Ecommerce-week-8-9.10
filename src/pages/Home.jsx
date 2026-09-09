@@ -15,6 +15,12 @@ function Home() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // ================= AUTH =================
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("user")
+  );
+
   // ================= LOADING =================
 
   const [loading, setLoading] = useState(true);
@@ -150,12 +156,22 @@ function Home() {
     };
   }, [sortedProducts.length]);
 
+  // ================= LOGIN =================
+
+  const goToLogin = () => {
+    navigate("/login");
+    setMenuOpen(false);
+  };
+
   // ================= LOGOUT =================
 
   const handleLogout = async () => {
-    const user = JSON.parse(
-      localStorage.getItem("user")
-    );
+    const storedUser =
+      localStorage.getItem("user");
+
+    const user = storedUser
+      ? JSON.parse(storedUser)
+      : null;
 
     try {
       if (user) {
@@ -179,11 +195,23 @@ function Home() {
       );
     }
 
+    // Remove login data
     localStorage.removeItem("user");
+
+    // Remove cart data
     localStorage.removeItem("cart");
     localStorage.removeItem("cartItems");
 
-    navigate("/login");
+    // Update UI
+    setIsLoggedIn(false);
+    setMenuOpen(false);
+
+    // IMPORTANT:
+    // replace prevents logout page from staying
+    // in browser history
+    navigate("/login", {
+      replace: true,
+    });
   };
 
   // ================= NAVIGATION =================
@@ -227,17 +255,11 @@ function Home() {
 
         <div className="p-5 sm:p-6">
 
-          {/* CATEGORY */}
-
           <div className="h-4 bg-gray-200 rounded w-1/4 mb-3"></div>
-
-          {/* NAME */}
 
           <div className="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
 
           <div className="h-6 bg-gray-200 rounded w-1/2 mb-5"></div>
-
-          {/* PRICE + STOCK */}
 
           <div className="flex justify-between mb-5">
 
@@ -246,8 +268,6 @@ function Home() {
             <div className="h-4 bg-gray-200 rounded w-1/5"></div>
 
           </div>
-
-          {/* BUTTON */}
 
           <div className="h-12 bg-gray-200 rounded-xl"></div>
 
@@ -304,26 +324,43 @@ function Home() {
                 Products
               </button>
 
-              <button
-                onClick={goToOrders}
-                className="text-gray-700 hover:text-[#7A3039] font-medium transition"
-              >
-                My Orders
-              </button>
+              {/* LOGGED IN OPTIONS */}
 
-              <button
-                onClick={goToCart}
-                className="text-gray-700 hover:text-[#7A3039] font-medium transition"
-              >
-                🛒 Cart
-              </button>
+              {isLoggedIn && (
+                <>
+                  <button
+                    onClick={goToOrders}
+                    className="text-gray-700 hover:text-[#7A3039] font-medium transition"
+                  >
+                    My Orders
+                  </button>
 
-              <button
-                onClick={handleLogout}
-                className="bg-[#7A3039] text-white px-4 lg:px-5 py-2 rounded-lg hover:bg-[#64252D] transition"
-              >
-                Logout
-              </button>
+                  <button
+                    onClick={goToCart}
+                    className="text-gray-700 hover:text-[#7A3039] font-medium transition"
+                  >
+                    🛒 Cart
+                  </button>
+                </>
+              )}
+
+              {/* LOGIN / LOGOUT */}
+
+              {isLoggedIn ? (
+                <button
+                  onClick={handleLogout}
+                  className="bg-[#7A3039] text-white px-4 lg:px-5 py-2 rounded-lg hover:bg-[#64252D] transition"
+                >
+                  Logout
+                </button>
+              ) : (
+                <button
+                  onClick={goToLogin}
+                  className="bg-[#7A3039] text-white px-4 lg:px-5 py-2 rounded-lg hover:bg-[#64252D] transition"
+                >
+                  Login
+                </button>
+              )}
 
             </div>
 
@@ -362,26 +399,41 @@ function Home() {
                   Products
                 </button>
 
-                <button
-                  onClick={goToOrders}
-                  className="w-full text-left px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-[#F8F1E8] hover:text-[#7A3039] transition"
-                >
-                  My Orders
-                </button>
+                {isLoggedIn && (
+                  <>
+                    <button
+                      onClick={goToOrders}
+                      className="w-full text-left px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-[#F8F1E8] hover:text-[#7A3039] transition"
+                    >
+                      My Orders
+                    </button>
 
-                <button
-                  onClick={goToCart}
-                  className="w-full text-left px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-[#F8F1E8] hover:text-[#7A3039] transition"
-                >
-                  🛒 Cart
-                </button>
+                    <button
+                      onClick={goToCart}
+                      className="w-full text-left px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-[#F8F1E8] hover:text-[#7A3039] transition"
+                    >
+                      🛒 Cart
+                    </button>
+                  </>
+                )}
 
-                <button
-                  onClick={handleLogout}
-                  className="w-full bg-[#7A3039] text-white px-5 py-3 rounded-lg hover:bg-[#64252D] transition mt-2"
-                >
-                  Logout
-                </button>
+                {/* LOGIN / LOGOUT */}
+
+                {isLoggedIn ? (
+                  <button
+                    onClick={handleLogout}
+                    className="w-full bg-[#7A3039] text-white px-5 py-3 rounded-lg hover:bg-[#64252D] transition mt-2"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    onClick={goToLogin}
+                    className="w-full bg-[#7A3039] text-white px-5 py-3 rounded-lg hover:bg-[#64252D] transition mt-2"
+                  >
+                    Login
+                  </button>
+                )}
 
               </div>
 
@@ -504,7 +556,6 @@ function Home() {
           >
 
             {categories.map((cat) => (
-
               <option
                 key={cat}
                 value={cat}
@@ -513,7 +564,6 @@ function Home() {
                   ? "All Categories"
                   : cat}
               </option>
-
             ))}
 
           </select>
