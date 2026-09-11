@@ -75,8 +75,6 @@ function AdminProducts() {
       return;
     }
 
-    // Duplicate check
-
     const duplicateProduct = products.find(
       (product) =>
         product.name.trim().toLowerCase() ===
@@ -160,8 +158,6 @@ function AdminProducts() {
       setShowPopup(true);
       return;
     }
-
-    // Duplicate name check
 
     const duplicateProduct = products.find(
       (product) =>
@@ -708,7 +704,7 @@ function AdminProducts() {
                         <td className="px-6 py-4">
 
                           {product.active === false ? (
-                            <span className="px-3 py-1 rounded-full text-sm bg-red-100 text-red-700">
+                            <span className="px-3 py-1 rounded-full text-sm bg-slate-200 text-slate-600">
                               Inactive
                             </span>
                           ) : (
@@ -725,16 +721,20 @@ function AdminProducts() {
 
                           <div className="flex gap-2">
 
+                            {/* EDIT BUTTON */}
+
                             <button
                               onClick={() =>
                                 handleEdit(
                                   product
                                 )
                               }
-                              className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-700"
+                              className="px-3 py-1.5 text-sm rounded-md bg-slate-800 text-white hover:bg-slate-700 transition"
                             >
                               Edit
                             </button>
+
+                            {/* DELETE BUTTON */}
 
                             {product.active !==
                               false && (
@@ -744,7 +744,7 @@ function AdminProducts() {
                                     product
                                   )
                                 }
-                                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                                className="px-3 py-1.5 text-sm rounded-md bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
                               >
                                 Delete
                               </button>
@@ -769,7 +769,6 @@ function AdminProducts() {
       </div>
 
       {/* ================= POPUP ================= */}
-
 
       {showPopup && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
