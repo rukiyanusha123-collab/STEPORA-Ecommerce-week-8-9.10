@@ -11,25 +11,22 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
+import NotFound from "./pages/NotFound";
 
 import AdminDashboard from "./admin/AdminDashboard";
 import AdminProducts from "./admin/AdminProducts";
 import AdminUsers from "./admin/AdminUsers";
 
 import ProtectedRoute from "./components/ProtectedRoute";
-import Wishlist from "./pages/Wishlist";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* ================= USER ROUTES ================= */}
+        {/* ================= PUBLIC ROUTES ================= */}
 
-        <Route
-          path="/"
-          element={<Register />}
-        />
+        <Route path="/" element={<Register />} />
 
         <Route
           path="/register"
@@ -40,6 +37,9 @@ function App() {
           path="/login"
           element={<Login />}
         />
+
+
+        {/* ================= USER ROUTES ================= */}
 
         <Route
           path="/home"
@@ -115,14 +115,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+
+        {/* ================= 404 ROUTE ================= */}
+
         <Route
-  path="/wishlist"
-  element={
-    <ProtectedRoute>
-      <Wishlist />
-    </ProtectedRoute>
-  }
-/>
+          path="*"
+          element={<NotFound />}
+        />
 
       </Routes>
     </BrowserRouter>
