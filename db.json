@@ -25,7 +25,8 @@
       "category": "Casual",
       "image": "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=800&q=80",
       "description": "Stylish casual sneaker for everyday wear",
-      "stock": 12
+      "stock": 12,
+      "active": true
     },
     {
       "id": "4",
@@ -663,6 +664,13 @@
       "password": "rukiyanusha123",
       "role": "user",
       "blocked": false
+    },
+    {
+      "name": "Husna",
+      "email": "husna123@gmail.com",
+      "password": "husna123",
+      "role": "user",
+      "id": "j1BomRWSTL8"
     }
   ],
   "orders": [
@@ -719,7 +727,19 @@
     {
       "userId": "I6Tq6yGg840",
       "userEmail": "rukiyanusha123@gmail.com",
-      "items": [],
+      "items": [
+        {
+          "id": "2",
+          "name": "Adidas Ultraboost",
+          "price": 5999,
+          "category": "Running",
+          "image": "/images/asics26.jpg",
+          "description": "Lightweight running shoe with responsive cushioning",
+          "stock": 15,
+          "size": "6",
+          "quantity": 1
+        }
+      ],
       "id": "7tZ2pLj7BEk"
     },
     {
@@ -727,6 +747,24 @@
       "userEmail": "rukiyanusha123@gmail.com",
       "items": [],
       "id": "IQ6Y6-uPZ9E"
+    },
+    {
+      "userId": "j1BomRWSTL8",
+      "userEmail": "husna123@gmail.com",
+      "items": [
+        {
+          "id": "1",
+          "name": "Nike Air Max",
+          "price": 4999,
+          "category": "Running",
+          "image": "/images/adidas1.jpg",
+          "description": "Comfortable running shoe",
+          "stock": 10,
+          "size": "6",
+          "quantity": 1
+        }
+      ],
+      "id": "6GrcsBAmluM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

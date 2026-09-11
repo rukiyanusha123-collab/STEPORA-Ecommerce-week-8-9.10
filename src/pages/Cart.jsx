@@ -31,7 +31,7 @@ function Cart() {
     const fetchCart = async () => {
       if (!user) {
         setLoading(false);
-        setCartLoaded(true);  
+        setCartLoaded(true);
         return;
       }
 
@@ -170,6 +170,13 @@ function Cart() {
     });
   };
 
+  // Logout
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    dispatch(setCart([]));
+    navigate("/login");
+  };
+
   // Loading
   if (loading) {
     return (
@@ -192,10 +199,12 @@ function Cart() {
         </div>
 
         {/* NAVBAR */}
-        <nav className="bg-white shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <nav className="bg-white shadow-sm sticky top-0 z-50">
 
-            <div className="flex items-center justify-between gap-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            {/* MAIN NAVBAR */}
+            <div className="flex items-center justify-between gap-4 py-4">
 
               {/* LOGO */}
               <h1
@@ -206,7 +215,7 @@ function Cart() {
               </h1>
 
               {/* DESKTOP NAV */}
-              <div className="hidden sm:flex items-center gap-5 md:gap-8 font-medium">
+              <div className="hidden md:flex items-center gap-5 lg:gap-8 font-medium">
 
                 <button
                   onClick={() => navigate("/home")}
@@ -222,38 +231,94 @@ function Cart() {
                   PRODUCTS
                 </button>
 
+                <button
+                  onClick={() => navigate("/wishlist")}
+                  className="text-gray-700 hover:text-[#722F37] transition"
+                >
+                  WISHLIST
+                </button>
+
+                <button
+                  onClick={() => navigate("/orders")}
+                  className="text-gray-700 hover:text-[#722F37] transition"
+                >
+                  ORDERS
+                </button>
+
               </div>
 
-              {/* CART */}
-              <button
-                onClick={() => navigate("/home")}
-                className="text-lg sm:text-xl hover:scale-110 transition"
-              >
-                🛒
-              </button>
+              {/* RIGHT SIDE */}
+              <div className="flex items-center gap-3 sm:gap-5">
+
+                {/* CART */}
+                <button
+                  onClick={() => navigate("/cart")}
+                  className="relative text-lg sm:text-xl hover:scale-110 transition"
+                  aria-label="Cart"
+                >
+                  🛒
+
+                  {totalItems > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-[#722F37] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+                      {totalItems}
+                    </span>
+                  )}
+                </button>
+
+                {/* LOGOUT */}
+                <button
+                  onClick={handleLogout}
+                  className="hidden sm:block border border-[#722F37] text-[#722F37] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#722F37] hover:text-white transition"
+                >
+                  LOGOUT
+                </button>
+
+              </div>
 
             </div>
 
             {/* MOBILE NAV */}
-            <div className="flex sm:hidden items-center justify-center gap-6 pt-4 mt-4 border-t border-gray-100">
+            <div className="md:hidden flex items-center justify-center gap-4 sm:gap-6 pb-4 pt-3 border-t border-gray-100">
 
               <button
                 onClick={() => navigate("/home")}
-                className="text-sm font-medium text-gray-700 hover:text-[#722F37]"
+                className="text-xs sm:text-sm font-medium text-gray-700 hover:text-[#722F37]"
               >
                 HOME
               </button>
 
               <button
                 onClick={() => navigate("/home")}
-                className="text-sm font-medium text-gray-700 hover:text-[#722F37]"
+                className="text-xs sm:text-sm font-medium text-gray-700 hover:text-[#722F37]"
               >
                 PRODUCTS
+              </button>
+
+              <button
+                onClick={() => navigate("/wishlist")}
+                className="text-xs sm:text-sm font-medium text-gray-700 hover:text-[#722F37]"
+              >
+                WISHLIST
+              </button>
+
+              <button
+                onClick={() => navigate("/orders")}
+                className="text-xs sm:text-sm font-medium text-gray-700 hover:text-[#722F37]"
+              >
+                ORDERS
+              </button>
+
+              <button
+                onClick={handleLogout}
+                className="text-xs sm:text-sm font-medium text-red-500 hover:text-red-700"
+              >
+                LOGOUT
               </button>
 
             </div>
 
           </div>
+
         </nav>
 
         {/* EMPTY CART */}
@@ -319,11 +384,12 @@ function Cart() {
       </div>
 
       {/* NAVBAR */}
-      <nav className="bg-white shadow-sm">
+      <nav className="bg-white shadow-sm sticky top-0 z-50">
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <div className="flex items-center justify-between gap-4">
+          {/* MAIN NAVBAR */}
+          <div className="flex items-center justify-between gap-4 py-4">
 
             {/* LOGO */}
             <h1
@@ -334,7 +400,7 @@ function Cart() {
             </h1>
 
             {/* DESKTOP NAV */}
-            <div className="hidden sm:flex items-center gap-5 md:gap-8 font-medium">
+            <div className="hidden md:flex items-center gap-5 lg:gap-8 font-medium">
 
               <button
                 onClick={() => navigate("/home")}
@@ -350,33 +416,88 @@ function Cart() {
                 PRODUCTS
               </button>
 
+              <button
+                onClick={() => navigate("/wishlist")}
+                className="text-gray-700 hover:text-[#722F37] transition"
+              >
+                WISHLIST
+              </button>
+
+              <button
+                onClick={() => navigate("/orders")}
+                className="text-gray-700 hover:text-[#722F37] transition"
+              >
+                ORDERS
+              </button>
+
             </div>
 
-            {/* CART */}
-            <button
-              onClick={() => navigate("/cart")}
-              className="text-lg sm:text-xl hover:scale-110 transition"
-            >
-              🛒
-            </button>
+            {/* RIGHT SIDE */}
+            <div className="flex items-center gap-3 sm:gap-5">
+
+              {/* CART */}
+              <button
+                onClick={() => navigate("/cart")}
+                className="relative text-lg sm:text-xl hover:scale-110 transition"
+                aria-label="Cart"
+              >
+                🛒
+
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#722F37] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
+              </button>
+
+              {/* LOGOUT */}
+              <button
+                onClick={handleLogout}
+                className="hidden sm:block border border-[#722F37] text-[#722F37] px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#722F37] hover:text-white transition"
+              >
+                LOGOUT
+              </button>
+
+            </div>
 
           </div>
 
           {/* MOBILE NAV */}
-          <div className="flex sm:hidden items-center justify-center gap-6 pt-4 mt-4 border-t border-gray-100">
+          <div className="md:hidden flex items-center justify-center gap-4 sm:gap-6 pb-4 pt-3 border-t border-gray-100">
 
             <button
               onClick={() => navigate("/home")}
-              className="text-sm font-medium text-gray-700 hover:text-[#722F37]"
+              className="text-xs sm:text-sm font-medium text-gray-700 hover:text-[#722F37]"
             >
               HOME
             </button>
 
             <button
               onClick={() => navigate("/home")}
-              className="text-sm font-medium text-gray-700 hover:text-[#722F37]"
+              className="text-xs sm:text-sm font-medium text-gray-700 hover:text-[#722F37]"
             >
               PRODUCTS
+            </button>
+
+            <button
+              onClick={() => navigate("/wishlist")}
+              className="text-xs sm:text-sm font-medium text-gray-700 hover:text-[#722F37]"
+            >
+              WISHLIST
+            </button>
+
+            <button
+              onClick={() => navigate("/orders")}
+              className="text-xs sm:text-sm font-medium text-gray-700 hover:text-[#722F37]"
+            >
+              ORDERS
+            </button>
+
+            <button
+              onClick={handleLogout}
+              className="text-xs sm:text-sm font-medium text-red-500 hover:text-red-700"
+            >
+              LOGOUT
             </button>
 
           </div>
@@ -492,7 +613,7 @@ function Cart() {
                       </p>
 
                       {/* QUANTITY + ITEM TOTAL */}
-                      <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-4 mt-4 sm:mt-5">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4 sm:mt-5">
 
                         {/* QUANTITY */}
                         <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden w-fit">
@@ -581,7 +702,7 @@ function Cart() {
           {/* SUMMARY */}
           <div className="lg:col-span-1">
 
-            <div className="bg-white rounded-2xl shadow-md p-5 sm:p-7 lg:sticky lg:top-6">
+            <div className="bg-white rounded-2xl shadow-md p-5 sm:p-7 lg:sticky lg:top-24">
 
               <h3 className="text-xl sm:text-2xl font-bold text-[#2D2424]">
                 Order Summary
