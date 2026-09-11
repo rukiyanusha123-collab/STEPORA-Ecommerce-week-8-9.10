@@ -8,23 +8,64 @@ function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Selected user for viewing details
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  // Fetch users
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/users"
+      );
+
+      setUsers(response.data);
+    } catch (error) {
+      console.log("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/users"
-        );
-
-        setUsers(response.data);
-      } catch (error) {
-        console.log("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUsers();
   }, []);
+
+  // View individual user
+  const handleViewUser = (user) => {
+    setSelectedUser(user);
+  };
+
+  // Close user details
+  const handleCloseDetails = () => {
+    setSelectedUser(null);
+  };
+
+  // Block / Unblock user
+  const handleBlockToggle = async (user) => {
+    try {
+      await axios.patch(
+        `http://localhost:3000/users/${user.id}`,
+        {
+          blocked: !user.blocked,
+        }
+      );
+
+      fetchUsers();
+
+      // Update selected user if details popup is open
+      if (selectedUser && selectedUser.id === user.id) {
+        setSelectedUser({
+          ...selectedUser,
+          blocked: !user.blocked,
+        });
+      }
+    } catch (error) {
+      console.log(
+        "Error updating user block status:",
+        error
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -128,6 +169,8 @@ function AdminUsers() {
 
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
 
+              {/* ================= TABLE HEADER ================= */}
+
               <div className="p-6 border-b border-slate-200">
 
                 <h3 className="text-xl font-bold text-slate-900">
@@ -139,6 +182,8 @@ function AdminUsers() {
                 </p>
 
               </div>
+
+              {/* ================= TABLE ================= */}
 
               <div className="overflow-x-auto">
 
@@ -160,6 +205,14 @@ function AdminUsers() {
                         Role
                       </th>
 
+                      <th className="text-left px-6 py-4 text-sm font-semibold text-slate-600">
+                        Status
+                      </th>
+
+                      <th className="text-left px-6 py-4 text-sm font-semibold text-slate-600">
+                        Action
+                      </th>
+
                     </tr>
 
                   </thead>
@@ -173,13 +226,19 @@ function AdminUsers() {
                         className="border-t border-slate-100 hover:bg-slate-50 transition"
                       >
 
+                        {/* NAME */}
+
                         <td className="px-6 py-4 font-semibold text-slate-900">
                           {user.name}
                         </td>
 
+                        {/* EMAIL */}
+
                         <td className="px-6 py-4 text-slate-600">
                           {user.email}
                         </td>
+
+                        {/* ROLE */}
 
                         <td className="px-6 py-4">
 
@@ -192,6 +251,62 @@ function AdminUsers() {
                           >
                             {user.role || "user"}
                           </span>
+
+                        </td>
+
+                        {/* STATUS */}
+
+                        <td className="px-6 py-4">
+
+                          <span
+                            className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                              user.blocked
+                                ? "bg-red-100 text-red-700"
+                                : "bg-green-100 text-green-700"
+                            }`}
+                          >
+                            {user.blocked
+                              ? "Blocked"
+                              : "Active"}
+                          </span>
+
+                        </td>
+
+                        {/* ACTIONS */}
+
+                        <td className="px-6 py-4">
+
+                          <div className="flex gap-2">
+
+                            {/* VIEW */}
+
+                            <button
+                              onClick={() =>
+                                handleViewUser(user)
+                              }
+                              className="px-3 py-1.5 text-sm rounded-md bg-slate-800 text-white hover:bg-slate-700 transition"
+                            >
+                              View
+                            </button>
+
+                            {/* BLOCK / UNBLOCK */}
+
+                            <button
+                              onClick={() =>
+                                handleBlockToggle(user)
+                              }
+                              className={`px-3 py-1.5 text-sm rounded-md transition ${
+                                user.blocked
+                                  ? "bg-green-100 text-green-700 hover:bg-green-200"
+                                  : "bg-red-100 text-red-700 hover:bg-red-200"
+                              }`}
+                            >
+                              {user.blocked
+                                ? "Unblock"
+                                : "Block"}
+                            </button>
+
+                          </div>
 
                         </td>
 
@@ -212,6 +327,127 @@ function AdminUsers() {
         </section>
 
       </main>
+
+      {/* ================= USER DETAILS MODAL ================= */}
+
+      {selectedUser && (
+
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center px-4 z-50">
+
+          <div className="bg-white w-full max-w-md rounded-2xl shadow-xl p-6">
+
+            {/* MODAL HEADER */}
+
+            <div className="flex justify-between items-center mb-6">
+
+              <h3 className="text-xl font-bold text-slate-900">
+                User Details
+              </h3>
+
+              <button
+                onClick={handleCloseDetails}
+                className="text-slate-500 hover:text-slate-900 text-xl"
+              >
+                ✕
+              </button>
+
+            </div>
+
+            {/* USER DETAILS */}
+
+            <div className="space-y-4">
+
+              <div>
+                <p className="text-sm text-slate-500">
+                  User ID
+                </p>
+
+                <p className="font-semibold text-slate-900">
+                  {selectedUser.id}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-sm text-slate-500">
+                  Name
+                </p>
+
+                <p className="font-semibold text-slate-900">
+                  {selectedUser.name}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-sm text-slate-500">
+                  Email
+                </p>
+
+                <p className="font-semibold text-slate-900">
+                  {selectedUser.email}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-sm text-slate-500">
+                  Role
+                </p>
+
+                <p className="font-semibold text-slate-900">
+                  {selectedUser.role || "user"}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-sm text-slate-500">
+                  Account Status
+                </p>
+
+                <span
+                  className={`inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold ${
+                    selectedUser.blocked
+                      ? "bg-red-100 text-red-700"
+                      : "bg-green-100 text-green-700"
+                  }`}
+                >
+                  {selectedUser.blocked
+                    ? "Blocked"
+                    : "Active"}
+                </span>
+              </div>
+
+            </div>
+
+            {/* BLOCK / UNBLOCK INSIDE MODAL */}
+
+            <button
+              onClick={() =>
+                handleBlockToggle(selectedUser)
+              }
+              className={`w-full mt-6 py-3 rounded-lg font-semibold transition ${
+                selectedUser.blocked
+                  ? "bg-green-600 text-white hover:bg-green-700"
+                  : "bg-red-600 text-white hover:bg-red-700"
+              }`}
+            >
+              {selectedUser.blocked
+                ? "Unblock User"
+                : "Block User"}
+            </button>
+
+            {/* CLOSE */}
+
+            <button
+              onClick={handleCloseDetails}
+              className="w-full mt-3 bg-slate-900 text-white py-3 rounded-lg hover:bg-slate-800 transition"
+            >
+              Close
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
 
     </div>
   );
