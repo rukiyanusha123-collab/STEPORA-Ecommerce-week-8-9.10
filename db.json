@@ -762,6 +762,17 @@
           "stock": 10,
           "size": "6",
           "quantity": 1
+        },
+        {
+          "id": "10",
+          "name": "New Balance 574",
+          "price": 5799,
+          "category": "Casual",
+          "image": "/images/asics28.jpg",
+          "description": "Comfortable everyday lifestyle shoe",
+          "stock": 13,
+          "size": "6",
+          "quantity": 1
         }
       ],
       "id": "6GrcsBAmluM"

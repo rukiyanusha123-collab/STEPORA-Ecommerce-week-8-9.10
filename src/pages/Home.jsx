@@ -96,12 +96,12 @@ function Home() {
   return (
     <div className="min-h-screen bg-[#F8F1E7]">
 
-      {/* TOP BAR */}
+      {/* ================= TOP BAR ================= */}
       <div className="bg-[#722F37] text-white text-center px-4 py-2 text-xs sm:text-sm">
         Free Shipping on Orders Above ₹999
       </div>
 
-      {/* NAVBAR */}
+      {/* ================= NAVBAR ================= */}
       <nav className="bg-white shadow-sm sticky top-0 z-50">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -307,12 +307,12 @@ function Home() {
                 {/* DECORATIVE CIRCLE */}
                 <div className="absolute w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full bg-[#E8D7C7]" />
 
-                {/* PUMA SMASH V2 - SAME IMAGE FROM db.json */}
+                {/* PUMA SMASH V2 */}
                 {heroProduct && (
                   <img
                     src={heroProduct.image}
                     alt={heroProduct.name}
-                    className="relative z-10 w-[82%] sm:w-[75%] lg:w-[72%] max-h-[330px] sm:max-h-[380px] lg:max-h-[420px] object-contain"
+                    className="relative z-10 w-[82%] sm:w-[75%] lg:w-[72%] max-h-[330px] sm:max-h-[380px] lg:max-h-[420px] object-contain hover:scale-105 transition duration-500"
                   />
                 )}
 
@@ -335,76 +335,116 @@ function Home() {
         {/* SECTION TITLE */}
         <div className="mb-7 sm:mb-9">
 
-          <p className="text-[#722F37] font-medium text-sm sm:text-base tracking-wide">
-            OUR COLLECTION
+          <p className="text-[#722F37] font-semibold text-sm sm:text-base tracking-widest uppercase">
+            Our Collection
           </p>
 
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] mt-2">
-            Explore Our Shoes
-          </h2>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] mt-2">
+                Explore Our Shoes
+              </h2>
+
+              <p className="text-gray-500 mt-2 text-sm sm:text-base">
+                Find the perfect pair for every step.
+              </p>
+            </div>
+
+            <div className="text-sm text-gray-500">
+              {filteredProducts.length}{" "}
+              {filteredProducts.length === 1
+                ? "product"
+                : "products"}
+            </div>
+
+          </div>
 
         </div>
 
         {/* FILTERS */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-5 mb-8">
 
-          {/* SEARCH */}
-          <input
-            type="text"
-            placeholder="Search shoes"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#722F37]"
-          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
-          {/* CATEGORY */}
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#722F37]"
-          >
-            {categories.map((item) => (
-              <option key={item} value={item}>
-                {item === "All"
-                  ? "All Categories"
-                  : item}
+            {/* SEARCH */}
+            <div className="relative">
+
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                🔍
+              </span>
+
+              <input
+                type="text"
+                placeholder="Search shoes..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full bg-[#F8F1E7] border border-transparent rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-[#722F37] focus:ring-1 focus:ring-[#722F37] transition"
+              />
+
+            </div>
+
+            {/* CATEGORY */}
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full bg-[#F8F1E7] border border-transparent rounded-xl px-4 py-3.5 outline-none focus:border-[#722F37] focus:ring-1 focus:ring-[#722F37] transition"
+            >
+              {categories.map((item) => (
+                <option key={item} value={item}>
+                  {item === "All"
+                    ? "All Categories"
+                    : item}
+                </option>
+              ))}
+            </select>
+
+            {/* SORT */}
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="w-full bg-[#F8F1E7] border border-transparent rounded-xl px-4 py-3.5 outline-none focus:border-[#722F37] focus:ring-1 focus:ring-[#722F37] transition"
+            >
+              <option value="">
+                Sort By Price
               </option>
-            ))}
-          </select>
 
-          {/* SORT */}
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value)}
-            className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#722F37]"
-          >
-            <option value="">
-              Sort By Price
-            </option>
+              <option value="low">
+                Price: Low to High
+              </option>
 
-            <option value="low">
-              Price: Low to High
-            </option>
+              <option value="high">
+                Price: High to Low
+              </option>
+            </select>
 
-            <option value="high">
-              Price: High to Low
-            </option>
-          </select>
+          </div>
 
         </div>
 
         {/* PRODUCT COUNT */}
         <div className="mb-5 text-sm text-gray-500">
-          Showing {visibleProducts.length} of{" "}
-          {filteredProducts.length} products
+          Showing{" "}
+          <span className="font-semibold text-[#2D2424]">
+            {visibleProducts.length}
+          </span>{" "}
+          of{" "}
+          <span className="font-semibold text-[#2D2424]">
+            {filteredProducts.length}
+          </span>{" "}
+          products
         </div>
 
         {/* NO PRODUCTS */}
         {filteredProducts.length === 0 ? (
 
-          <div className="bg-white rounded-2xl p-10 text-center shadow-sm">
+          <div className="bg-white rounded-2xl p-10 sm:p-14 text-center shadow-sm">
 
-            <h3 className="text-xl font-semibold text-[#2D2424]">
+            <div className="text-5xl mb-4">
+              👟
+            </div>
+
+            <h3 className="text-xl sm:text-2xl font-semibold text-[#2D2424]">
               No products found
             </h3>
 
@@ -423,67 +463,126 @@ function Home() {
 
               <div
                 key={product.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col"
+                className="group bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col border border-transparent hover:border-[#E8D7C7]"
               >
 
-                {/* PRODUCT IMAGE */}
+                {/* ================= IMAGE ================= */}
                 <div
                   onClick={() =>
                     navigate(`/product/${product.id}`)
                   }
-                  className="bg-[#F5F0EA] h-[230px] sm:h-[260px] lg:h-[280px] p-5 flex items-center justify-center cursor-pointer"
+                  className="relative bg-[#F5F0EA] h-[260px] sm:h-[280px] lg:h-[300px] p-5 sm:p-6 flex items-center justify-center cursor-pointer overflow-hidden"
                 >
 
+                  {/* TOP BADGE */}
+                  <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm text-[#722F37] px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase shadow-sm">
+                    STEPORA
+                  </div>
+
+                  {/* VIEW ICON */}
+                  <div className="absolute top-4 right-4 z-10 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-[#722F37] opacity-0 group-hover:opacity-100 transition duration-300 shadow-sm">
+                    ↗
+                  </div>
+
+                  {/* IMAGE */}
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-contain rounded-xl"
+                    className="w-full h-full object-contain rounded-xl group-hover:scale-110 transition-transform duration-500 ease-out"
                   />
 
                 </div>
 
-                {/* PRODUCT DETAILS */}
-                <div className="p-5 flex flex-col flex-1">
+                {/* ================= DETAILS ================= */}
+                <div className="p-5 sm:p-6 flex flex-col flex-1">
 
-                  <p className="text-[#722F37] text-xs font-semibold uppercase tracking-widest">
-                    {product.category}
-                  </p>
+                  {/* CATEGORY */}
+                  <div className="flex items-center justify-between gap-3">
 
-                  <h3 className="text-xl font-bold text-[#2D2424] mt-2 break-words">
+                    <span className="inline-block bg-[#F8F1E7] text-[#722F37] px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+                      {product.category}
+                    </span>
+
+                    <span className="text-xs text-gray-400">
+                      ID: {product.id}
+                    </span>
+
+                  </div>
+
+                  {/* NAME */}
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#2D2424] mt-4 break-words leading-tight">
                     {product.name}
                   </h3>
 
-                  <p className="text-gray-500 text-sm mt-2 line-clamp-2">
+                  {/* DESCRIPTION */}
+                  <p className="text-gray-500 text-sm mt-2 line-clamp-2 leading-relaxed min-h-[40px]">
                     {product.description}
                   </p>
 
-                  <div className="flex items-center justify-between gap-3 mt-4">
+                  {/* PRICE + STOCK */}
+                  <div className="flex items-end justify-between gap-3 mt-5">
 
-                    <span className="text-2xl font-bold text-[#722F37]">
-                      ₹{product.price}
-                    </span>
+                    <div>
+                      <p className="text-xs text-gray-400 uppercase tracking-wider">
+                        Price
+                      </p>
+
+                      <span className="text-2xl sm:text-3xl font-bold text-[#722F37]">
+                        ₹{product.price}
+                      </span>
+                    </div>
 
                     {product.stock > 0 ? (
-                      <span className="text-xs sm:text-sm text-green-600 font-semibold">
-                        In Stock
-                      </span>
+
+                      <div className="text-right">
+
+                        <div className="flex items-center gap-1.5 justify-end">
+                          <span className="w-2 h-2 rounded-full bg-green-500" />
+
+                          <span className="text-xs sm:text-sm text-green-600 font-semibold">
+                            In Stock
+                          </span>
+                        </div>
+
+                        <p className="text-[11px] text-gray-400 mt-1">
+                          {product.stock} available
+                        </p>
+
+                      </div>
+
                     ) : (
-                      <span className="text-xs sm:text-sm text-red-600 font-semibold">
-                        Out of Stock
-                      </span>
+
+                      <div className="flex items-center gap-1.5">
+
+                        <span className="w-2 h-2 rounded-full bg-red-500" />
+
+                        <span className="text-xs sm:text-sm text-red-600 font-semibold">
+                          Out of Stock
+                        </span>
+
+                      </div>
+
                     )}
 
                   </div>
 
-                  {/* VIEW PRODUCT */}
-                  <button
-                    onClick={() =>
-                      navigate(`/product/${product.id}`)
-                    }
-                    className="mt-5 w-full bg-[#722F37] text-white py-3 rounded-xl font-semibold hover:bg-[#5E252C] transition"
-                  >
-                    View Product
-                  </button>
+                  {/* DIVIDER */}
+                  <div className="border-t border-gray-100 mt-5 pt-5">
+
+                    {/* VIEW PRODUCT */}
+                    <button
+                      onClick={() =>
+                        navigate(`/product/${product.id}`)
+                      }
+                      className="w-full bg-[#722F37] text-white py-3.5 rounded-xl font-semibold text-sm sm:text-base hover:bg-[#5E252C] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                    >
+                      View Product
+                      <span className="group-hover:translate-x-1 transition-transform">
+                        →
+                      </span>
+                    </button>
+
+                  </div>
 
                 </div>
 
@@ -498,11 +597,11 @@ function Home() {
         {/* LOAD MORE */}
         {visibleCount < filteredProducts.length && (
 
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center mt-9">
 
             <button
               onClick={handleLoadMore}
-              className="bg-white border border-[#722F37] text-[#722F37] px-7 py-3 rounded-xl font-semibold hover:bg-[#722F37] hover:text-white transition"
+              className="bg-white border-2 border-[#722F37] text-[#722F37] px-8 py-3.5 rounded-xl font-semibold hover:bg-[#722F37] hover:text-white hover:shadow-lg transition-all duration-300"
             >
               Load More
             </button>
@@ -513,7 +612,7 @@ function Home() {
 
       </main>
 
-      {/* FOOTER */}
+      {/* ================= FOOTER ================= */}
       <footer className="bg-[#2D2424] text-white">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-9 sm:py-12">
