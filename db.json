@@ -671,6 +671,13 @@
       "password": "husna123",
       "role": "user",
       "id": "j1BomRWSTL8"
+    },
+    {
+      "name": "Sumayya ",
+      "email": "sumi@gmail.com",
+      "password": "786764",
+      "role": "user",
+      "id": "-5gZzR5CAt4"
     }
   ],
   "orders": [
@@ -703,6 +710,36 @@
       "status": "Pending",
       "date": "2026-09-04T16:36:27.070Z",
       "id": "_yHw8_3zZLQ"
+    },
+    {
+      "userId": "-5gZzR5CAt4",
+      "userEmail": "sumi@gmail.com",
+      "customer": {
+        "name": "sumayya",
+        "address": "pirambillykudy ",
+        "city": "vengola",
+        "pincode": "123454",
+        "phone": "9539999786"
+      },
+      "items": [
+        {
+          "id": "28",
+          "name": "Nike Infinity Run",
+          "price": 7299,
+          "category": "Running",
+          "image": "/images/nike6.jpg",
+          "description": "Cushioned running shoe for long distances",
+          "stock": 9,
+          "size": "8",
+          "quantity": 1
+        }
+      ],
+      "subtotal": 7299,
+      "shipping": 0,
+      "total": 7299,
+      "status": "Pending",
+      "date": "2026-09-11T14:49:22.677Z",
+      "id": "eenl20LxFpg"
     }
   ],
   "carts": [
@@ -753,6 +790,12 @@
       "userEmail": "husna123@gmail.com",
       "items": [],
       "id": "6GrcsBAmluM"
+    },
+    {
+      "userId": "-5gZzR5CAt4",
+      "userEmail": "sumi@gmail.com",
+      "items": [],
+      "id": "8erxaYCwyl4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

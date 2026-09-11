@@ -11,6 +11,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
+import Wishlist from "./pages/Wishlist";
 import NotFound from "./pages/NotFound";
 
 import AdminDashboard from "./admin/AdminDashboard";
@@ -82,6 +83,17 @@ function App() {
           element={
             <ProtectedRoute>
               <Orders />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* WISHLIST */}
+
+        <Route
+          path="/wishlist"
+          element={
+            <ProtectedRoute>
+              <Wishlist />
             </ProtectedRoute>
           }
         />
