@@ -40,7 +40,12 @@ function Home() {
           "http://localhost:3000/products"
         );
 
-        setProducts(response.data);
+        // Show only active products to users
+        setProducts(
+          response.data.filter(
+            (product) => product.active !== false
+          )
+        );
       } catch (error) {
         console.log("Error fetching products:", error);
       } finally {
@@ -114,7 +119,7 @@ function Home() {
       visibleCount
     );
 
-  // ================= RESET SCROLL COUNT =================
+  // ================= RESET VISIBLE COUNT =================
 
   useEffect(() => {
     setVisibleCount(6);
@@ -195,20 +200,13 @@ function Home() {
       );
     }
 
-    // Remove login data
     localStorage.removeItem("user");
-
-    // Remove cart data
     localStorage.removeItem("cart");
     localStorage.removeItem("cartItems");
 
-    // Update UI
     setIsLoggedIn(false);
     setMenuOpen(false);
 
-    // IMPORTANT:
-    // replace prevents logout page from staying
-    // in browser history
     navigate("/login", {
       replace: true,
     });
@@ -247,11 +245,7 @@ function Home() {
     return (
       <div className="bg-white rounded-2xl overflow-hidden shadow-sm animate-pulse">
 
-        {/* IMAGE SKELETON */}
-
-        <div className="h-56 sm:h-64 bg-gray-200"></div>
-
-        {/* CONTENT SKELETON */}
+        <div className="h-52 sm:h-60 md:h-64 bg-gray-200"></div>
 
         <div className="p-5 sm:p-6">
 
@@ -261,7 +255,7 @@ function Home() {
 
           <div className="h-6 bg-gray-200 rounded w-1/2 mb-5"></div>
 
-          <div className="flex justify-between mb-5">
+          <div className="flex items-center justify-between gap-3 mb-5">
 
             <div className="h-6 bg-gray-200 rounded w-1/4"></div>
 
@@ -272,6 +266,7 @@ function Home() {
           <div className="h-12 bg-gray-200 rounded-xl"></div>
 
         </div>
+
       </div>
     );
   };
@@ -285,21 +280,21 @@ function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <div className="flex items-center justify-between min-h-[72px]">
+          <div className="flex items-center justify-between min-h-[68px] sm:min-h-[72px]">
 
             {/* LOGO */}
 
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
 
               <img
                 src={steporaLogo}
                 alt="STEPORA Logo"
-                className="w-11 h-11 sm:w-14 sm:h-14 object-contain shrink-0"
+                className="w-10 h-10 sm:w-14 sm:h-14 object-contain shrink-0"
               />
 
               <h1
                 onClick={goToHome}
-                className="text-2xl sm:text-3xl font-bold text-[#7A3039] cursor-pointer"
+                className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#7A3039] cursor-pointer"
               >
                 STEPORA
               </h1>
@@ -308,7 +303,7 @@ function Home() {
 
             {/* DESKTOP NAVIGATION */}
 
-            <div className="hidden md:flex items-center gap-5 lg:gap-7">
+            <div className="hidden md:flex items-center gap-4 lg:gap-7">
 
               <button
                 onClick={goToHome}
@@ -323,8 +318,6 @@ function Home() {
               >
                 Products
               </button>
-
-              {/* LOGGED IN OPTIONS */}
 
               {isLoggedIn && (
                 <>
@@ -343,8 +336,6 @@ function Home() {
                   </button>
                 </>
               )}
-
-              {/* LOGIN / LOGOUT */}
 
               {isLoggedIn ? (
                 <button
@@ -370,7 +361,7 @@ function Home() {
               onClick={() =>
                 setMenuOpen(!menuOpen)
               }
-              className="md:hidden text-2xl text-[#7A3039] w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#F8F1E8] transition"
+              className="md:hidden shrink-0 text-2xl text-[#7A3039] w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#F8F1E8] transition"
               aria-label="Toggle menu"
             >
               {menuOpen ? "✕" : "☰"}
@@ -417,8 +408,6 @@ function Home() {
                   </>
                 )}
 
-                {/* LOGIN / LOGOUT */}
-
                 {isLoggedIn ? (
                   <button
                     onClick={handleLogout}
@@ -450,17 +439,17 @@ function Home() {
 
         <div className="bg-[#E9D8C9] rounded-2xl sm:rounded-3xl overflow-hidden">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 items-center min-h-0 md:min-h-[500px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center">
 
             {/* HERO TEXT */}
 
-            <div className="p-7 sm:p-10 md:p-14">
+            <div className="p-6 sm:p-10 md:p-12 lg:p-14">
 
               <p className="text-[#7A3039] font-semibold text-sm sm:text-base mb-3 sm:mb-4">
                 STEP INTO STYLE
               </p>
 
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-5 sm:mb-6">
+              <h2 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-5 sm:mb-6">
 
                 Find Your
 
@@ -472,7 +461,7 @@ function Home() {
 
               </h2>
 
-              <p className="text-gray-600 text-base sm:text-lg mb-7 sm:mb-8 max-w-md leading-relaxed">
+              <p className="text-gray-600 text-sm sm:text-lg mb-7 sm:mb-8 max-w-md leading-relaxed">
                 Discover stylish and comfortable shoes
                 designed to match your everyday lifestyle.
               </p>
@@ -488,14 +477,14 @@ function Home() {
 
             {/* HERO IMAGE */}
 
-            <div className="flex justify-center items-center px-5 pb-7 sm:px-8 sm:pb-8 md:p-8">
+            <div className="flex justify-center items-center px-4 pb-6 sm:px-8 sm:pb-8 md:p-8">
 
-              <div className="w-full max-w-lg h-[260px] sm:h-[330px] md:h-[380px] bg-[#F5F0EA] rounded-2xl sm:rounded-3xl flex items-center justify-center overflow-hidden shadow-lg">
+              <div className="w-full max-w-lg h-[230px] xs:h-[260px] sm:h-[330px] md:h-[360px] lg:h-[380px] bg-[#F5F0EA] rounded-2xl sm:rounded-3xl flex items-center justify-center overflow-hidden shadow-lg">
 
                 <img
                   src={heroShoe}
                   alt="Stepora Shoe"
-                  className="w-full h-full object-contain p-5 sm:p-8"
+                  className="w-full h-full object-contain p-4 sm:p-8"
                 />
 
               </div>
@@ -512,7 +501,7 @@ function Home() {
 
       <section
         id="products"
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16"
       >
 
         {/* SECTION HEADING */}
@@ -523,7 +512,7 @@ function Home() {
             OUR COLLECTION
           </p>
 
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+          <h2 className="text-2xl sm:text-4xl font-bold text-gray-900">
             Explore Our Shoes
           </h2>
 
@@ -531,7 +520,7 @@ function Home() {
 
         {/* ================= FILTERS ================= */}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-10">
 
           {/* SEARCH */}
 
@@ -542,7 +531,7 @@ function Home() {
             onChange={(e) =>
               setSearch(e.target.value)
             }
-            className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#7A3039]"
+            className="w-full min-w-0 px-4 sm:px-5 py-3.5 sm:py-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#7A3039]"
           />
 
           {/* CATEGORY */}
@@ -552,7 +541,7 @@ function Home() {
             onChange={(e) =>
               setCategory(e.target.value)
             }
-            className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#7A3039]"
+            className="w-full min-w-0 px-4 sm:px-5 py-3.5 sm:py-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#7A3039]"
           >
 
             {categories.map((cat) => (
@@ -575,7 +564,7 @@ function Home() {
             onChange={(e) =>
               setSort(e.target.value)
             }
-            className="w-full px-4 sm:px-5 py-3.5 sm:py-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#7A3039]"
+            className="w-full min-w-0 px-4 sm:px-5 py-3.5 sm:py-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#7A3039] sm:col-span-2 md:col-span-1"
           >
 
             <option value="default">
@@ -597,13 +586,13 @@ function Home() {
         {/* ================= PRODUCT COUNT ================= */}
 
         {!loading && (
-          <p className="text-gray-500 mb-5 sm:mb-6">
+          <p className="text-gray-500 mb-5 sm:mb-6 text-sm sm:text-base">
             Showing {visibleProducts.length} of{" "}
             {sortedProducts.length} products
           </p>
         )}
 
-        {/* ================= SKELETON LOADING ================= */}
+        {/* ================= LOADING ================= */}
 
         {loading ? (
 
@@ -627,7 +616,7 @@ function Home() {
               No shoes found
             </h3>
 
-            <p className="text-gray-500">
+            <p className="text-gray-500 text-sm sm:text-base">
               Try another search or category.
             </p>
 
@@ -644,12 +633,12 @@ function Home() {
 
                 <div
                   key={product.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
+                  className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col"
                 >
 
                   {/* PRODUCT IMAGE */}
 
-                  <div className="h-56 sm:h-64 bg-[#F5F0EA] flex items-center justify-center p-5 sm:p-6">
+                  <div className="h-52 sm:h-60 md:h-64 bg-[#F5F0EA] flex items-center justify-center p-4 sm:p-6 shrink-0">
 
                     <img
                       src={product.image}
@@ -661,13 +650,13 @@ function Home() {
 
                   {/* PRODUCT INFO */}
 
-                  <div className="p-5 sm:p-6">
+                  <div className="p-5 sm:p-6 flex flex-col flex-1">
 
                     <p className="text-sm text-[#7A3039] font-medium mb-2">
                       {product.category}
                     </p>
 
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 min-h-[28px] sm:min-h-[30px]">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 min-h-[48px]">
                       {product.name}
                     </h3>
 
@@ -689,7 +678,7 @@ function Home() {
                           `/product/${product.id}`
                         )
                       }
-                      className="w-full bg-[#7A3039] text-white py-3 rounded-xl font-semibold hover:bg-[#64252D] transition"
+                      className="w-full bg-[#7A3039] text-white py-3 rounded-xl font-semibold hover:bg-[#64252D] transition mt-auto"
                     >
                       View Details
                     </button>
@@ -705,7 +694,7 @@ function Home() {
 
         )}
 
-        {/* ================= INFINITE SCROLL MESSAGE ================= */}
+        {/* ================= LOAD MORE ================= */}
 
         {!loading &&
           visibleProducts.length <
@@ -713,9 +702,9 @@ function Home() {
 
             <div className="text-center py-10">
 
-              <div className="inline-flex items-center gap-3 text-gray-500">
+              <div className="inline-flex items-center gap-3 text-gray-500 text-sm sm:text-base">
 
-                <div className="w-5 h-5 border-2 border-gray-300 border-t-[#7A3039] rounded-full animate-spin"></div>
+                <div className="w-5 h-5 border-2 border-gray-300 border-t-[#7A3039] rounded-full animate-spin shrink-0"></div>
 
                 <span>
                   Scroll down to load more shoes...
@@ -734,7 +723,7 @@ function Home() {
           visibleProducts.length >=
             sortedProducts.length && (
 
-            <p className="text-center text-gray-400 py-10">
+            <p className="text-center text-gray-400 py-10 text-sm sm:text-base">
               You have reached the end of the collection.
             </p>
 
