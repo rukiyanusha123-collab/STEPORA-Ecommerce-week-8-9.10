@@ -13,6 +13,7 @@ function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState("");
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   // FETCH PRODUCT
   useEffect(() => {
@@ -23,6 +24,23 @@ function ProductDetails() {
         );
 
         setProduct(response.data);
+
+        // CHECK WISHLIST
+        const userData = localStorage.getItem("user");
+
+        if (userData) {
+          const user = JSON.parse(userData);
+
+          const savedWishlist = JSON.parse(
+            localStorage.getItem(`wishlist_${user.id}`) || "[]"
+          );
+
+          const alreadyWishlisted = savedWishlist.some(
+            (item) => String(item.id) === String(response.data.id)
+          );
+
+          setIsWishlisted(alreadyWishlisted);
+        }
       } catch (error) {
         console.log("Product details error:", error);
       } finally {
@@ -32,6 +50,48 @@ function ProductDetails() {
 
     fetchProduct();
   }, [id]);
+
+  // ADD / REMOVE WISHLIST
+  const handleWishlist = () => {
+    const userData = localStorage.getItem("user");
+
+    if (!userData) {
+      alert("Please login to use wishlist.");
+      navigate("/login");
+      return;
+    }
+
+    const user = JSON.parse(userData);
+
+    const savedWishlist = JSON.parse(
+      localStorage.getItem(`wishlist_${user.id}`) || "[]"
+    );
+
+    const alreadyExists = savedWishlist.some(
+      (item) => String(item.id) === String(product.id)
+    );
+
+    let updatedWishlist;
+
+    if (alreadyExists) {
+      updatedWishlist = savedWishlist.filter(
+        (item) => String(item.id) !== String(product.id)
+      );
+
+      setIsWishlisted(false);
+      alert("Removed from wishlist.");
+    } else {
+      updatedWishlist = [...savedWishlist, product];
+
+      setIsWishlisted(true);
+      alert("Added to wishlist ❤️");
+    }
+
+    localStorage.setItem(
+      `wishlist_${user.id}`,
+      JSON.stringify(updatedWishlist)
+    );
+  };
 
   // ADD TO CART
   const handleAddToCart = async () => {
@@ -200,6 +260,13 @@ function ProductDetails() {
                 PRODUCTS
               </button>
 
+              <button
+                onClick={() => navigate("/wishlist")}
+                className="text-gray-700 hover:text-[#722F37] transition"
+              >
+                WISHLIST ❤️
+              </button>
+
             </div>
 
             {/* CART */}
@@ -214,7 +281,7 @@ function ProductDetails() {
           </div>
 
           {/* MOBILE NAVIGATION */}
-          <div className="flex sm:hidden items-center justify-center gap-5 pt-4 border-t border-gray-100 mt-4">
+          <div className="flex sm:hidden items-center justify-center gap-4 pt-4 border-t border-gray-100 mt-4">
 
             <button
               onClick={() => navigate("/home")}
@@ -224,10 +291,10 @@ function ProductDetails() {
             </button>
 
             <button
-              onClick={() => navigate("/home")}
+              onClick={() => navigate("/wishlist")}
               className="text-sm font-medium text-gray-700 hover:text-[#722F37]"
             >
-              PRODUCTS
+              ❤️ WISHLIST
             </button>
 
           </div>
@@ -254,13 +321,22 @@ function ProductDetails() {
             {/* IMAGE SECTION */}
             <div className="bg-[#F5F0EA] min-h-[300px] sm:min-h-[400px] md:min-h-[500px] flex items-center justify-center p-5 sm:p-8">
 
-              <div className="w-full h-[300px] sm:h-[400px] md:h-[450px] flex items-center justify-center">
+              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[450px] flex items-center justify-center">
 
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-full object-contain rounded-2xl"
                 />
+
+                {/* WISHLIST BUTTON */}
+                <button
+                  onClick={handleWishlist}
+                  className="absolute top-3 right-3 sm:top-5 sm:right-5 bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-md hover:scale-110 transition text-2xl"
+                  aria-label="Wishlist"
+                >
+                  {isWishlisted ? "❤️" : "♡"}
+                </button>
 
               </div>
 
@@ -359,32 +435,32 @@ function ProductDetails() {
               {/* PRODUCT INFO */}
               <div className="mt-6 sm:mt-8 border-t pt-5 sm:pt-6">
 
-                <div className="flex flex-col xs:flex-row xs:justify-between gap-1 xs:gap-4 py-2">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4 py-2">
                   <span className="text-gray-500 text-sm sm:text-base">
                     Category
                   </span>
 
-                  <span className="font-medium text-sm sm:text-base break-words xs:text-right">
+                  <span className="font-medium text-sm sm:text-base break-words sm:text-right">
                     {product.category}
                   </span>
                 </div>
 
-                <div className="flex flex-col xs:flex-row xs:justify-between gap-1 xs:gap-4 py-2">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4 py-2">
                   <span className="text-gray-500 text-sm sm:text-base">
                     Product ID
                   </span>
 
-                  <span className="font-medium text-sm sm:text-base break-all xs:text-right">
+                  <span className="font-medium text-sm sm:text-base break-all sm:text-right">
                     {product.id}
                   </span>
                 </div>
 
-                <div className="flex flex-col xs:flex-row xs:justify-between gap-1 xs:gap-4 py-2">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4 py-2">
                   <span className="text-gray-500 text-sm sm:text-base">
                     Availability
                   </span>
 
-                  <span className="font-medium text-sm sm:text-base xs:text-right">
+                  <span className="font-medium text-sm sm:text-base sm:text-right">
                     {product.stock > 0
                       ? "Available"
                       : "Unavailable"}
