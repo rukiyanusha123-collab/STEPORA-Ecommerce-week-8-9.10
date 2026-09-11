@@ -17,6 +17,7 @@ import AdminProducts from "./admin/AdminProducts";
 import AdminUsers from "./admin/AdminUsers";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import Wishlist from "./pages/Wishlist";
 
 function App() {
   return (
@@ -114,6 +115,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+  path="/wishlist"
+  element={
+    <ProtectedRoute>
+      <Wishlist />
+    </ProtectedRoute>
+  }
+/>
 
       </Routes>
     </BrowserRouter>
