@@ -661,7 +661,8 @@
       "name": "Rukiya Nusha",
       "email": "rukiyanusha123@gmail.com",
       "password": "rukiyanusha123",
-      "role": "user"
+      "role": "user",
+      "blocked": false
     }
   ],
   "orders": [
