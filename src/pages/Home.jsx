@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Home() {
   const navigate = useNavigate();
@@ -11,6 +12,17 @@ function Home() {
   const [sort, setSort] = useState("");
   const [visibleCount, setVisibleCount] = useState(6);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // ================= CART COUNT =================
+  const cartItems = useSelector(
+    (state) => state.cart.items
+  );
+
+  const cartCount = cartItems.reduce(
+    (total, item) =>
+      total + Number(item.quantity || 1),
+    0
+  );
 
   // ================= FETCH PRODUCTS =================
   useEffect(() => {
@@ -160,11 +172,18 @@ function Home() {
                 Wishlist ❤️
               </button>
 
+              {/* CART */}
               <button
                 onClick={() => navigate("/cart")}
-                className="text-sm font-medium text-gray-700 hover:text-[#722F37] transition"
+                className="relative text-sm font-medium text-gray-700 hover:text-[#722F37] transition"
               >
                 🛒 Cart
+
+                {cartCount > 0 && (
+                  <span className="absolute -top-3 -right-4 bg-[#722F37] text-white text-[10px] font-bold min-w-[20px] h-[20px] px-1 rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
               </button>
 
               <button
@@ -238,6 +257,7 @@ function Home() {
                   Wishlist ❤️
                 </button>
 
+                {/* MOBILE CART */}
                 <button
                   onClick={() => {
                     navigate("/cart");
@@ -246,6 +266,12 @@ function Home() {
                   className="text-left px-4 py-3 rounded-lg text-gray-700 hover:bg-[#F8F1E7] hover:text-[#722F37]"
                 >
                   🛒 Cart
+
+                  {cartCount > 0 && (
+                    <span className="ml-2 inline-flex bg-[#722F37] text-white text-[10px] font-bold min-w-[20px] h-[20px] px-1 rounded-full items-center justify-center">
+                      {cartCount}
+                    </span>
+                  )}
                 </button>
 
                 <button
