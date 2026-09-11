@@ -15,6 +15,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    // Check empty fields
     if (!email || !password) {
       setPopupMessage("Please enter email and password.");
       setSuccess(false);
@@ -23,12 +24,14 @@ function Login() {
     }
 
     try {
+      // Get all users
       const response = await axios.get(
         "http://localhost:3000/users"
       );
 
       const users = response.data;
 
+      // Find user
       const loggedInUser = users.find(
         (user) =>
           user.email?.trim().toLowerCase() ===
@@ -36,6 +39,7 @@ function Login() {
           user.password === password
       );
 
+      // Invalid login
       if (!loggedInUser) {
         setPopupMessage("Invalid email or password.");
         setSuccess(false);
@@ -43,6 +47,17 @@ function Login() {
         return;
       }
 
+      // Check blocked user
+      if (loggedInUser.blocked === true) {
+        setPopupMessage(
+          "Your account has been blocked."
+        );
+        setSuccess(false);
+        setShowPopup(true);
+        return;
+      }
+
+      // User data to store in localStorage
       const userData = {
         id: loggedInUser.id,
         name: loggedInUser.name,
@@ -50,17 +65,21 @@ function Login() {
         role: loggedInUser.role || "user",
       };
 
+      // Save logged-in user
       localStorage.setItem(
         "user",
         JSON.stringify(userData)
       );
 
+      // Clear old local cart
       localStorage.removeItem("cart");
       localStorage.removeItem("cartItems");
 
+      // Clear form
       setEmail("");
       setPassword("");
 
+      // Success popup
       setPopupMessage("Welcome back!");
       setSuccess(true);
       setShowPopup(true);
@@ -77,6 +96,7 @@ function Login() {
     }
   };
 
+  // Popup OK button
   const handleOk = () => {
     setShowPopup(false);
 
@@ -85,116 +105,121 @@ function Login() {
         localStorage.getItem("user")
       );
 
+      // Admin → Admin Dashboard
       if (userData.role === "admin") {
         navigate("/admin");
       } else {
+        // User → Home
         navigate("/home");
       }
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F1E7] flex items-center justify-center px-4 sm:px-6 py-8">
+    <div className="min-h-screen bg-[#F8F1E7] flex items-center justify-center px-4">
 
-      {/* LOGIN CARD */}
-      <div className="w-full max-w-md bg-white p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-xl">
+      {/* ================= LOGIN CARD ================= */}
+
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
 
         {/* LOGO */}
-        <div className="text-center mb-6 sm:mb-8">
 
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#722F37]">
+        <div className="text-center mb-8">
+
+          <h1 className="text-3xl font-bold text-[#722F37]">
             STEPORA
           </h1>
 
-          <p className="text-gray-500 mt-2 text-sm sm:text-base">
-            Welcome back to STEPORA
+          <p className="text-gray-500 mt-2">
+            Welcome back! Please login to continue.
           </p>
 
         </div>
 
-        {/* TITLE */}
-        <h2 className="text-2xl sm:text-3xl font-bold text-center text-[#2D2424] mb-6 sm:mb-8">
-          Login
-        </h2>
+        {/* ================= FORM ================= */}
 
-        {/* FORM */}
-        <form
-          onSubmit={handleLogin}
-          className="space-y-4 sm:space-y-5"
-        >
+        <form onSubmit={handleLogin}>
 
           {/* EMAIL */}
-          <div>
 
-            <label className="block text-sm font-semibold text-[#2D2424] mb-2">
+          <div className="mb-5">
+
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Email
             </label>
 
             <input
               type="email"
-              placeholder="Enter your email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl outline-none text-[#2D2424] text-sm sm:text-base focus:ring-2 focus:ring-[#722F37] focus:border-[#722F37] transition"
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
+              placeholder="Enter your email"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-[#722F37]"
             />
 
           </div>
 
           {/* PASSWORD */}
-          <div>
 
-            <label className="block text-sm font-semibold text-[#2D2424] mb-2">
+          <div className="mb-6">
+
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Password
             </label>
 
             <input
               type="password"
-              placeholder="Enter your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl outline-none text-[#2D2424] text-sm sm:text-base focus:ring-2 focus:ring-[#722F37] focus:border-[#722F37] transition"
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+              placeholder="Enter your password"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-[#722F37]"
             />
 
           </div>
 
           {/* LOGIN BUTTON */}
+
           <button
             type="submit"
-            className="w-full bg-[#722F37] text-white py-3 sm:py-3.5 rounded-xl font-semibold text-sm sm:text-base hover:bg-[#5E252C] transition active:scale-[0.98]"
+            className="w-full bg-[#722F37] text-white py-3 rounded-lg font-semibold hover:bg-[#5f272e] transition"
           >
-            LOGIN
+            Login
           </button>
 
         </form>
 
-        {/* REGISTER */}
-        <div className="text-center mt-6">
+        {/* REGISTER LINK */}
 
-          <p className="text-gray-500 text-sm sm:text-base">
-            Don't have an account?
-          </p>
+        <p className="text-center text-sm text-gray-500 mt-6">
+
+          Don't have an account?{" "}
 
           <button
-            type="button"
             onClick={() => navigate("/register")}
-            className="mt-2 text-[#722F37] font-semibold hover:underline"
+            className="text-[#722F37] font-semibold hover:underline"
           >
-            Create an Account
+            Register
           </button>
 
-        </div>
+        </p>
 
       </div>
 
-      {/* POPUP */}
-      {showPopup && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+      {/* ================= POPUP ================= */}
 
-          <div className="bg-white w-full max-w-sm p-6 sm:p-8 rounded-2xl sm:rounded-3xl shadow-2xl text-center">
+      {showPopup && (
+
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center px-4 z-50">
+
+          <div className="bg-white w-full max-w-sm rounded-2xl shadow-xl p-6 text-center">
 
             {/* ICON */}
+
             <div
-              className={`w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full flex items-center justify-center text-2xl sm:text-3xl font-bold mb-4 sm:mb-5 ${
+              className={`w-14 h-14 mx-auto rounded-full flex items-center justify-center text-2xl mb-4 ${
                 success
                   ? "bg-green-100 text-green-600"
                   : "bg-red-100 text-red-600"
@@ -203,29 +228,23 @@ function Login() {
               {success ? "✓" : "!"}
             </div>
 
-            {/* POPUP TITLE */}
-            <h2
-              className={`text-xl sm:text-2xl font-bold mb-3 ${
-                success
-                  ? "text-[#722F37]"
-                  : "text-red-600"
-              }`}
-            >
+            {/* MESSAGE */}
+
+            <h2 className="text-xl font-bold text-gray-900 mb-2">
               {success
-                ? "Login Successful!"
-                : "Login Error"}
+                ? "Login Successful"
+                : "Login Failed"}
             </h2>
 
-            {/* MESSAGE */}
-            <p className="text-[#2D2424] text-sm sm:text-base mb-6">
+            <p className="text-gray-500 text-sm">
               {popupMessage}
             </p>
 
             {/* OK BUTTON */}
+
             <button
-              type="button"
               onClick={handleOk}
-              className="w-full sm:w-auto bg-[#722F37] text-white px-8 sm:px-10 py-3 rounded-xl font-semibold hover:bg-[#5E252C] transition"
+              className="w-full mt-6 bg-[#722F37] text-white py-3 rounded-lg font-semibold hover:bg-[#5f272e] transition"
             >
               OK
             </button>
@@ -233,6 +252,7 @@ function Login() {
           </div>
 
         </div>
+
       )}
 
     </div>

@@ -646,7 +646,8 @@
       "name": "Muaadh",
       "email": "muaadh123@gmail.com",
       "password": "muaadh123",
-      "role": "user"
+      "role": "user",
+      "blocked": false
     },
     {
       "id": "admin1",
