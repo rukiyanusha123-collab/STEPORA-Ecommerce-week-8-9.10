@@ -52,7 +52,7 @@ function AdminUsers() {
 
       fetchUsers();
 
-      // Update selected user if details popup is open
+      // Update selected user if popup is open
       if (selectedUser && selectedUser.id === user.id) {
         setSelectedUser({
           ...selectedUser,
@@ -62,6 +62,33 @@ function AdminUsers() {
     } catch (error) {
       console.log(
         "Error updating user block status:",
+        error
+      );
+    }
+  };
+
+  // Soft delete user
+  const handleSoftDelete = async (user) => {
+    try {
+      await axios.patch(
+        `http://localhost:3000/users/${user.id}`,
+        {
+          active: false,
+        }
+      );
+
+      fetchUsers();
+
+      // Update selected user if popup is open
+      if (selectedUser && selectedUser.id === user.id) {
+        setSelectedUser({
+          ...selectedUser,
+          active: false,
+        });
+      }
+    } catch (error) {
+      console.log(
+        "Error deactivating user:",
         error
       );
     }
@@ -258,17 +285,33 @@ function AdminUsers() {
 
                         <td className="px-6 py-4">
 
-                          <span
-                            className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                              user.blocked
-                                ? "bg-red-100 text-red-700"
-                                : "bg-green-100 text-green-700"
-                            }`}
-                          >
-                            {user.blocked
-                              ? "Blocked"
-                              : "Active"}
-                          </span>
+                          <div className="flex flex-col gap-1">
+
+                            {/* Active / Inactive */}
+
+                            <span
+                              className={`w-fit px-3 py-1 rounded-full text-sm font-semibold ${
+                                user.active === false
+                                  ? "bg-slate-200 text-slate-600"
+                                  : "bg-green-100 text-green-700"
+                              }`}
+                            >
+                              {user.active === false
+                                ? "Inactive"
+                                : "Active"}
+                            </span>
+
+                            {/* Blocked */}
+
+                            {user.blocked && (
+
+                              <span className="w-fit px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
+                                Blocked
+                              </span>
+
+                            )}
+
+                          </div>
 
                         </td>
 
@@ -276,7 +319,7 @@ function AdminUsers() {
 
                         <td className="px-6 py-4">
 
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-wrap">
 
                             {/* VIEW */}
 
@@ -305,6 +348,21 @@ function AdminUsers() {
                                 ? "Unblock"
                                 : "Block"}
                             </button>
+
+                            {/* SOFT DELETE */}
+
+                            {user.active !== false && (
+
+                              <button
+                                onClick={() =>
+                                  handleSoftDelete(user)
+                                }
+                                className="px-3 py-1.5 text-sm rounded-md bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
+                              >
+                                Delete
+                              </button>
+
+                            )}
 
                           </div>
 
@@ -404,20 +462,34 @@ function AdminUsers() {
 
                 <span
                   className={`inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold ${
-                    selectedUser.blocked
-                      ? "bg-red-100 text-red-700"
+                    selectedUser.active === false
+                      ? "bg-slate-200 text-slate-600"
                       : "bg-green-100 text-green-700"
                   }`}
                 >
-                  {selectedUser.blocked
-                    ? "Blocked"
+                  {selectedUser.active === false
+                    ? "Inactive"
                     : "Active"}
                 </span>
               </div>
 
+              {selectedUser.blocked && (
+
+                <div>
+                  <p className="text-sm text-slate-500">
+                    Block Status
+                  </p>
+
+                  <span className="inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
+                    Blocked
+                  </span>
+                </div>
+
+              )}
+
             </div>
 
-            {/* BLOCK / UNBLOCK INSIDE MODAL */}
+            {/* BLOCK / UNBLOCK */}
 
             <button
               onClick={() =>
@@ -433,6 +505,21 @@ function AdminUsers() {
                 ? "Unblock User"
                 : "Block User"}
             </button>
+
+            {/* SOFT DELETE */}
+
+            {selectedUser.active !== false && (
+
+              <button
+                onClick={() => {
+                  handleSoftDelete(selectedUser);
+                }}
+                className="w-full mt-3 bg-slate-200 text-slate-700 py-3 rounded-lg font-semibold hover:bg-slate-300 transition"
+              >
+                Mark Inactive
+              </button>
+
+            )}
 
             {/* CLOSE */}
 
