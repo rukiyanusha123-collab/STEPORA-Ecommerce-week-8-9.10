@@ -2,367 +2,175 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import heroShoe from "../assets/hero-shoe.jpg.avif";
-import steporaLogo from "../assets/stepora-logo.png";
-
 function Home() {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
-  const [sort, setSort] = useState("default");
-
+  const [sort, setSort] = useState("");
+  const [visibleCount, setVisibleCount] = useState(6);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // ================= AUTH =================
-
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    !!localStorage.getItem("user")
-  );
-
-  // ================= LOADING =================
-
-  const [loading, setLoading] = useState(true);
-
-  // ================= INFINITE SCROLL =================
-
-  const [visibleCount, setVisibleCount] = useState(6);
-
-  // ================= FETCH PRODUCTS =================
-
+  // FETCH PRODUCTS
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        setLoading(true);
-
         const response = await axios.get(
           "http://localhost:3000/products"
         );
 
-        // Show only active products to users
         setProducts(
           response.data.filter(
             (product) => product.active !== false
           )
         );
       } catch (error) {
-        console.log("Error fetching products:", error);
-      } finally {
-        setLoading(false);
+        console.log("Products fetch error:", error);
       }
     };
 
     fetchProducts();
   }, []);
 
-  // ================= CATEGORIES =================
+  // LOGOUT
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
+  // GET CATEGORIES
   const categories = [
     "All",
-    ...new Set(
-      products
-        .map((product) => product.category)
-        .filter(Boolean)
-    ),
+    ...new Set(products.map((product) => product.category)),
   ];
 
-  // ================= FILTER PRODUCTS =================
-
-  const filteredProducts = products.filter((product) => {
-    const productName =
-      product.name?.toLowerCase() || "";
-
-    const searchText =
-      search.toLowerCase();
-
-    const matchesSearch =
-      productName.includes(searchText);
+  // FILTER PRODUCTS
+  let filteredProducts = products.filter((product) => {
+    const matchesSearch = product.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
     const matchesCategory =
       category === "All" ||
       product.category === category;
 
-    return (
-      matchesSearch &&
-      matchesCategory
-    );
+    return matchesSearch && matchesCategory;
   });
 
-  // ================= SORT PRODUCTS =================
-
-  const sortedProducts = [
-    ...filteredProducts,
-  ].sort((a, b) => {
-    if (sort === "low") {
-      return (
-        Number(a.price) -
-        Number(b.price)
-      );
-    }
-
-    if (sort === "high") {
-      return (
-        Number(b.price) -
-        Number(a.price)
-      );
-    }
-
-    return 0;
-  });
-
-  // ================= VISIBLE PRODUCTS =================
-
-  const visibleProducts =
-    sortedProducts.slice(
-      0,
-      visibleCount
+  // SORT PRODUCTS
+  if (sort === "low") {
+    filteredProducts.sort(
+      (a, b) => Number(a.price) - Number(b.price)
     );
+  }
 
-  // ================= RESET VISIBLE COUNT =================
+  if (sort === "high") {
+    filteredProducts.sort(
+      (a, b) => Number(b.price) - Number(a.price)
+    );
+  }
 
+  const visibleProducts = filteredProducts.slice(
+    0,
+    visibleCount
+  );
+
+  // LOAD MORE
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 6);
+  };
+
+  // RESET PAGINATION WHEN FILTER CHANGES
   useEffect(() => {
     setVisibleCount(6);
   }, [search, category, sort]);
 
-  // ================= INFINITE SCROLL =================
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight =
-        document.documentElement.scrollHeight;
-
-      if (
-        scrollTop + windowHeight >=
-        documentHeight - 200
-      ) {
-        setVisibleCount((prev) => {
-          if (prev < sortedProducts.length) {
-            return prev + 6;
-          }
-
-          return prev;
-        });
-      }
-    };
-
-    window.addEventListener(
-      "scroll",
-      handleScroll
-    );
-
-    return () => {
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
-    };
-  }, [sortedProducts.length]);
-
-  // ================= LOGIN =================
-
-  const goToLogin = () => {
-    navigate("/login");
-    setMenuOpen(false);
-  };
-
-  // ================= LOGOUT =================
-
-  const handleLogout = async () => {
-    const storedUser =
-      localStorage.getItem("user");
-
-    const user = storedUser
-      ? JSON.parse(storedUser)
-      : null;
-
-    try {
-      if (user) {
-        const response = await axios.get(
-          `http://localhost:3000/carts?userId=${user.id}`
-        );
-
-        if (response.data.length > 0) {
-          await axios.patch(
-            `http://localhost:3000/carts/${response.data[0].id}`,
-            {
-              items: [],
-            }
-          );
-        }
-      }
-    } catch (error) {
-      console.log(
-        "Logout cart clear error:",
-        error
-      );
-    }
-
-    localStorage.removeItem("user");
-    localStorage.removeItem("cart");
-    localStorage.removeItem("cartItems");
-
-    setIsLoggedIn(false);
-    setMenuOpen(false);
-
-    navigate("/login", {
-      replace: true,
-    });
-  };
-
-  // ================= NAVIGATION =================
-
-  const scrollToProducts = () => {
-    document
-      .getElementById("products")
-      ?.scrollIntoView({
-        behavior: "smooth",
-      });
-
-    setMenuOpen(false);
-  };
-
-  const goToHome = () => {
-    navigate("/home");
-    setMenuOpen(false);
-  };
-
-  const goToOrders = () => {
-    navigate("/orders");
-    setMenuOpen(false);
-  };
-
-  const goToCart = () => {
-    navigate("/cart");
-    setMenuOpen(false);
-  };
-
-  // ================= SKELETON CARD =================
-
-  const SkeletonCard = () => {
-    return (
-      <div className="bg-white rounded-2xl overflow-hidden shadow-sm animate-pulse">
-
-        <div className="h-52 sm:h-60 md:h-64 bg-gray-200"></div>
-
-        <div className="p-5 sm:p-6">
-
-          <div className="h-4 bg-gray-200 rounded w-1/4 mb-3"></div>
-
-          <div className="h-6 bg-gray-200 rounded w-3/4 mb-3"></div>
-
-          <div className="h-6 bg-gray-200 rounded w-1/2 mb-5"></div>
-
-          <div className="flex items-center justify-between gap-3 mb-5">
-
-            <div className="h-6 bg-gray-200 rounded w-1/4"></div>
-
-            <div className="h-4 bg-gray-200 rounded w-1/5"></div>
-
-          </div>
-
-          <div className="h-12 bg-gray-200 rounded-xl"></div>
-
-        </div>
-
-      </div>
-    );
-  };
-
   return (
-    <div className="min-h-screen bg-[#F8F1E8] overflow-x-hidden">
+    <div className="min-h-screen bg-[#F8F1E7]">
 
-      {/* ================= NAVBAR ================= */}
+      {/* TOP BAR */}
+      <div className="bg-[#722F37] text-white text-center px-4 py-2 text-xs sm:text-sm">
+        Free Shipping on Orders Above ₹999
+      </div>
 
+      {/* NAVBAR */}
       <nav className="bg-white shadow-sm sticky top-0 z-50">
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 
-          <div className="flex items-center justify-between min-h-[68px] sm:min-h-[72px]">
+          {/* DESKTOP / MAIN NAVBAR */}
+          <div className="flex items-center justify-between gap-4">
 
             {/* LOGO */}
-
-            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-
-              <img
-                src={steporaLogo}
-                alt="STEPORA Logo"
-                className="w-10 h-10 sm:w-14 sm:h-14 object-contain shrink-0"
-              />
-
-              <h1
-                onClick={goToHome}
-                className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#7A3039] cursor-pointer"
-              >
-                STEPORA
-              </h1>
-
-            </div>
+            <h1
+              onClick={() => navigate("/home")}
+              className="text-2xl sm:text-3xl font-bold text-[#722F37] cursor-pointer shrink-0"
+            >
+              STEPORA
+            </h1>
 
             {/* DESKTOP NAVIGATION */}
-
-            <div className="hidden md:flex items-center gap-4 lg:gap-7">
+            <div className="hidden md:flex items-center gap-5 lg:gap-7 font-medium">
 
               <button
-                onClick={goToHome}
-                className="text-gray-700 hover:text-[#7A3039] font-medium transition"
+                onClick={() => navigate("/home")}
+                className="text-[#2D2424] hover:text-[#722F37] transition"
               >
                 Home
               </button>
 
               <button
-                onClick={scrollToProducts}
-                className="text-gray-700 hover:text-[#7A3039] font-medium transition"
+                onClick={() => {
+                  document
+                    .getElementById("products")
+                    ?.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                }}
+                className="text-[#2D2424] hover:text-[#722F37] transition"
               >
                 Products
               </button>
 
-              {isLoggedIn && (
-                <>
-                  <button
-                    onClick={goToOrders}
-                    className="text-gray-700 hover:text-[#7A3039] font-medium transition"
-                  >
-                    My Orders
-                  </button>
+              <button
+                onClick={() => navigate("/orders")}
+                className="text-[#2D2424] hover:text-[#722F37] transition"
+              >
+                My Orders
+              </button>
 
-                  <button
-                    onClick={goToCart}
-                    className="text-gray-700 hover:text-[#7A3039] font-medium transition"
-                  >
-                    🛒 Cart
-                  </button>
-                </>
-              )}
+              {/* WISHLIST */}
+              <button
+                onClick={() => navigate("/wishlist")}
+                className="text-[#2D2424] hover:text-[#722F37] transition"
+              >
+                Wishlist ❤️
+              </button>
 
-              {isLoggedIn ? (
-                <button
-                  onClick={handleLogout}
-                  className="bg-[#7A3039] text-white px-4 lg:px-5 py-2 rounded-lg hover:bg-[#64252D] transition"
-                >
-                  Logout
-                </button>
-              ) : (
-                <button
-                  onClick={goToLogin}
-                  className="bg-[#7A3039] text-white px-4 lg:px-5 py-2 rounded-lg hover:bg-[#64252D] transition"
-                >
-                  Login
-                </button>
-              )}
+              {/* CART */}
+              <button
+                onClick={() => navigate("/cart")}
+                className="text-[#2D2424] hover:text-[#722F37] transition"
+              >
+                🛒 Cart
+              </button>
+
+              {/* LOGOUT */}
+              <button
+                onClick={handleLogout}
+                className="bg-[#722F37] text-white px-5 py-2.5 rounded-lg hover:bg-[#5E252C] transition"
+              >
+                Logout
+              </button>
 
             </div>
 
             {/* MOBILE MENU BUTTON */}
-
             <button
-              onClick={() =>
-                setMenuOpen(!menuOpen)
-              }
-              className="md:hidden shrink-0 text-2xl text-[#7A3039] w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#F8F1E8] transition"
-              aria-label="Toggle menu"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden text-2xl text-[#722F37]"
+              aria-label="Menu"
             >
               {menuOpen ? "✕" : "☰"}
             </button>
@@ -370,59 +178,72 @@ function Home() {
           </div>
 
           {/* MOBILE NAVIGATION */}
-
           {menuOpen && (
-            <div className="md:hidden border-t border-gray-100 py-4">
+            <div className="md:hidden mt-4 pt-4 border-t border-gray-200">
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
 
                 <button
-                  onClick={goToHome}
-                  className="w-full text-left px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-[#F8F1E8] hover:text-[#7A3039] transition"
+                  onClick={() => {
+                    navigate("/home");
+                    setMenuOpen(false);
+                  }}
+                  className="text-left px-3 py-2 rounded-lg text-[#2D2424] hover:bg-[#F8F1E7] hover:text-[#722F37]"
                 >
                   Home
                 </button>
 
                 <button
-                  onClick={scrollToProducts}
-                  className="w-full text-left px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-[#F8F1E8] hover:text-[#7A3039] transition"
+                  onClick={() => {
+                    document
+                      .getElementById("products")
+                      ?.scrollIntoView({
+                        behavior: "smooth",
+                      });
+                    setMenuOpen(false);
+                  }}
+                  className="text-left px-3 py-2 rounded-lg text-[#2D2424] hover:bg-[#F8F1E7] hover:text-[#722F37]"
                 >
                   Products
                 </button>
 
-                {isLoggedIn && (
-                  <>
-                    <button
-                      onClick={goToOrders}
-                      className="w-full text-left px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-[#F8F1E8] hover:text-[#7A3039] transition"
-                    >
-                      My Orders
-                    </button>
+                <button
+                  onClick={() => {
+                    navigate("/orders");
+                    setMenuOpen(false);
+                  }}
+                  className="text-left px-3 py-2 rounded-lg text-[#2D2424] hover:bg-[#F8F1E7] hover:text-[#722F37]"
+                >
+                  My Orders
+                </button>
 
-                    <button
-                      onClick={goToCart}
-                      className="w-full text-left px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-[#F8F1E8] hover:text-[#7A3039] transition"
-                    >
-                      🛒 Cart
-                    </button>
-                  </>
-                )}
+                {/* MOBILE WISHLIST */}
+                <button
+                  onClick={() => {
+                    navigate("/wishlist");
+                    setMenuOpen(false);
+                  }}
+                  className="text-left px-3 py-2 rounded-lg text-[#2D2424] hover:bg-[#F8F1E7] hover:text-[#722F37]"
+                >
+                  Wishlist ❤️
+                </button>
 
-                {isLoggedIn ? (
-                  <button
-                    onClick={handleLogout}
-                    className="w-full bg-[#7A3039] text-white px-5 py-3 rounded-lg hover:bg-[#64252D] transition mt-2"
-                  >
-                    Logout
-                  </button>
-                ) : (
-                  <button
-                    onClick={goToLogin}
-                    className="w-full bg-[#7A3039] text-white px-5 py-3 rounded-lg hover:bg-[#64252D] transition mt-2"
-                  >
-                    Login
-                  </button>
-                )}
+                <button
+                  onClick={() => {
+                    navigate("/cart");
+                    setMenuOpen(false);
+                  }}
+                  className="text-left px-3 py-2 rounded-lg text-[#2D2424] hover:bg-[#F8F1E7] hover:text-[#722F37]"
+                >
+                  🛒 Cart
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                  className="text-left px-3 py-2 rounded-lg bg-[#722F37] text-white hover:bg-[#5E252C]"
+                >
+                  Logout
+                </button>
 
               </div>
 
@@ -433,42 +254,42 @@ function Home() {
 
       </nav>
 
-      {/* ================= HERO ================= */}
+      {/* HERO SECTION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10">
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 sm:pt-8">
-
-        <div className="bg-[#E9D8C9] rounded-2xl sm:rounded-3xl overflow-hidden">
+        <div className="bg-[#E8D7C7] rounded-2xl sm:rounded-3xl overflow-hidden">
 
           <div className="grid grid-cols-1 md:grid-cols-2 items-center">
 
             {/* HERO TEXT */}
+            <div className="p-6 sm:p-10 lg:p-14">
 
-            <div className="p-6 sm:p-10 md:p-12 lg:p-14">
-
-              <p className="text-[#7A3039] font-semibold text-sm sm:text-base mb-3 sm:mb-4">
+              <p className="text-[#722F37] font-medium text-sm sm:text-base">
                 STEP INTO STYLE
               </p>
 
-              <h2 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-5 sm:mb-6">
-
-                Find Your
-
-                <span className="text-[#7A3039]">
-                  {" "}Perfect{" "}
-                </span>
-
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-tight mt-4">
+                Find Your{" "}
+                <span className="text-[#722F37]">
+                  Perfect
+                </span>{" "}
                 Pair
-
               </h2>
 
-              <p className="text-gray-600 text-sm sm:text-lg mb-7 sm:mb-8 max-w-md leading-relaxed">
+              <p className="text-gray-600 text-sm sm:text-base lg:text-lg mt-5 max-w-xl leading-relaxed">
                 Discover stylish and comfortable shoes
                 designed to match your everyday lifestyle.
               </p>
 
               <button
-                onClick={scrollToProducts}
-                className="bg-[#7A3039] text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl font-semibold hover:bg-[#64252D] transition w-full sm:w-auto"
+                onClick={() => {
+                  document
+                    .getElementById("products")
+                    ?.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                }}
+                className="mt-7 bg-[#722F37] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-[#5E252C] transition"
               >
                 Shop Now
               </button>
@@ -476,16 +297,19 @@ function Home() {
             </div>
 
             {/* HERO IMAGE */}
+            <div className="p-5 sm:p-8 lg:p-10">
 
-            <div className="flex justify-center items-center px-4 pb-6 sm:px-8 sm:pb-8 md:p-8">
+              <div className="bg-white rounded-2xl sm:rounded-3xl shadow-md p-5 sm:p-8">
 
-              <div className="w-full max-w-lg h-[230px] xs:h-[260px] sm:h-[330px] md:h-[360px] lg:h-[380px] bg-[#F5F0EA] rounded-2xl sm:rounded-3xl flex items-center justify-center overflow-hidden shadow-lg">
+                <div className="h-[280px] sm:h-[360px] lg:h-[420px] flex items-center justify-center">
 
-                <img
-                  src={heroShoe}
-                  alt="Stepora Shoe"
-                  className="w-full h-full object-contain p-4 sm:p-8"
-                />
+                  <img
+                    src="https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80"
+                    alt="Featured shoe"
+                    className="w-full h-full object-contain"
+                  />
+
+                </div>
 
               </div>
 
@@ -497,257 +321,205 @@ function Home() {
 
       </section>
 
-      {/* ================= PRODUCTS ================= */}
-
-      <section
+      {/* PRODUCTS SECTION */}
+      <main
         id="products"
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14"
       >
 
-        {/* SECTION HEADING */}
+        {/* SECTION TITLE */}
+        <div className="mb-7 sm:mb-9">
 
-        <div className="mb-7 sm:mb-8">
-
-          <p className="text-[#7A3039] font-semibold text-sm sm:text-base mb-2">
+          <p className="text-[#722F37] font-medium text-sm sm:text-base">
             OUR COLLECTION
           </p>
 
-          <h2 className="text-2xl sm:text-4xl font-bold text-gray-900">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] mt-2">
             Explore Our Shoes
           </h2>
 
         </div>
 
-        {/* ================= FILTERS ================= */}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-10">
+        {/* FILTERS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
 
           {/* SEARCH */}
-
           <input
             type="text"
-            placeholder="Search shoes..."
+            placeholder="Search shoes"
             value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-            className="w-full min-w-0 px-4 sm:px-5 py-3.5 sm:py-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#7A3039]"
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#722F37]"
           />
 
           {/* CATEGORY */}
-
           <select
             value={category}
-            onChange={(e) =>
-              setCategory(e.target.value)
-            }
-            className="w-full min-w-0 px-4 sm:px-5 py-3.5 sm:py-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#7A3039]"
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#722F37]"
           >
-
-            {categories.map((cat) => (
-              <option
-                key={cat}
-                value={cat}
-              >
-                {cat === "All"
+            {categories.map((item) => (
+              <option key={item} value={item}>
+                {item === "All"
                   ? "All Categories"
-                  : cat}
+                  : item}
               </option>
             ))}
-
           </select>
 
           {/* SORT */}
-
           <select
             value={sort}
-            onChange={(e) =>
-              setSort(e.target.value)
-            }
-            className="w-full min-w-0 px-4 sm:px-5 py-3.5 sm:py-4 bg-white rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-[#7A3039] sm:col-span-2 md:col-span-1"
+            onChange={(e) => setSort(e.target.value)}
+            className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#722F37]"
           >
-
-            <option value="default">
-              Sort By Price
-            </option>
-
+            <option value="">Sort By Price</option>
             <option value="low">
               Price: Low to High
             </option>
-
             <option value="high">
               Price: High to Low
             </option>
-
           </select>
 
         </div>
 
-        {/* ================= PRODUCT COUNT ================= */}
+        {/* PRODUCT COUNT */}
+        <div className="mb-5 text-sm text-gray-500">
+          Showing {visibleProducts.length} of{" "}
+          {filteredProducts.length} products
+        </div>
 
-        {!loading && (
-          <p className="text-gray-500 mb-5 sm:mb-6 text-sm sm:text-base">
-            Showing {visibleProducts.length} of{" "}
-            {sortedProducts.length} products
-          </p>
-        )}
+        {/* NO PRODUCTS */}
+        {filteredProducts.length === 0 ? (
+          <div className="bg-white rounded-2xl p-10 text-center shadow-sm">
 
-        {/* ================= LOADING ================= */}
-
-        {loading ? (
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7 lg:gap-8">
-
-            {[1, 2, 3, 4, 5, 6].map(
-              (item) => (
-                <SkeletonCard key={item} />
-              )
-            )}
-
-          </div>
-
-        ) : sortedProducts.length === 0 ? (
-
-          /* ================= NO PRODUCTS ================= */
-
-          <div className="bg-white rounded-2xl p-8 sm:p-12 text-center">
-
-            <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">
-              No shoes found
+            <h3 className="text-xl font-semibold text-[#2D2424]">
+              No products found
             </h3>
 
-            <p className="text-gray-500 text-sm sm:text-base">
-              Try another search or category.
+            <p className="text-gray-500 mt-2">
+              Try changing your search or category.
             </p>
 
           </div>
-
         ) : (
 
-          /* ================= PRODUCT GRID ================= */
+          /* PRODUCT GRID */
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7 lg:gap-8">
+            {visibleProducts.map((product) => (
 
-            {visibleProducts.map(
-              (product) => (
+              <div
+                key={product.id}
+                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col"
+              >
 
+                {/* IMAGE */}
                 <div
-                  key={product.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col"
+                  onClick={() =>
+                    navigate(`/product/${product.id}`)
+                  }
+                  className="bg-[#F5F0EA] h-[230px] sm:h-[260px] lg:h-[280px] p-5 flex items-center justify-center cursor-pointer"
                 >
 
-                  {/* PRODUCT IMAGE */}
-
-                  <div className="h-52 sm:h-60 md:h-64 bg-[#F5F0EA] flex items-center justify-center p-4 sm:p-6 shrink-0">
-
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-contain"
-                    />
-
-                  </div>
-
-                  {/* PRODUCT INFO */}
-
-                  <div className="p-5 sm:p-6 flex flex-col flex-1">
-
-                    <p className="text-sm text-[#7A3039] font-medium mb-2">
-                      {product.category}
-                    </p>
-
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 min-h-[48px]">
-                      {product.name}
-                    </h3>
-
-                    <div className="flex items-center justify-between gap-3 mb-5">
-
-                      <p className="text-xl sm:text-2xl font-bold text-[#7A3039]">
-                        ₹{product.price}
-                      </p>
-
-                      <p className="text-xs sm:text-sm text-gray-500 whitespace-nowrap">
-                        Stock: {product.stock}
-                      </p>
-
-                    </div>
-
-                    <button
-                      onClick={() =>
-                        navigate(
-                          `/product/${product.id}`
-                        )
-                      }
-                      className="w-full bg-[#7A3039] text-white py-3 rounded-xl font-semibold hover:bg-[#64252D] transition mt-auto"
-                    >
-                      View Details
-                    </button>
-
-                  </div>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-contain rounded-xl"
+                  />
 
                 </div>
 
-              )
-            )}
+                {/* PRODUCT DETAILS */}
+                <div className="p-5 flex flex-col flex-1">
+
+                  <p className="text-[#722F37] text-xs font-semibold uppercase tracking-widest">
+                    {product.category}
+                  </p>
+
+                  <h3 className="text-xl font-bold text-[#2D2424] mt-2 break-words">
+                    {product.name}
+                  </h3>
+
+                  <p className="text-gray-500 text-sm mt-2 line-clamp-2">
+                    {product.description}
+                  </p>
+
+                  <div className="flex items-center justify-between gap-3 mt-4">
+
+                    <span className="text-2xl font-bold text-[#722F37]">
+                      ₹{product.price}
+                    </span>
+
+                    {product.stock > 0 ? (
+                      <span className="text-xs sm:text-sm text-green-600 font-semibold">
+                        In Stock
+                      </span>
+                    ) : (
+                      <span className="text-xs sm:text-sm text-red-600 font-semibold">
+                        Out of Stock
+                      </span>
+                    )}
+
+                  </div>
+
+                  {/* VIEW PRODUCT */}
+                  <button
+                    onClick={() =>
+                      navigate(`/product/${product.id}`)
+                    }
+                    className="mt-5 w-full bg-[#722F37] text-white py-3 rounded-xl font-semibold hover:bg-[#5E252C] transition"
+                  >
+                    View Product
+                  </button>
+
+                </div>
+
+              </div>
+
+            ))}
 
           </div>
 
         )}
 
-        {/* ================= LOAD MORE ================= */}
+        {/* LOAD MORE */}
+        {visibleCount < filteredProducts.length && (
+          <div className="flex justify-center mt-8">
 
-        {!loading &&
-          visibleProducts.length <
-            sortedProducts.length && (
+            <button
+              onClick={handleLoadMore}
+              className="bg-white border border-[#722F37] text-[#722F37] px-7 py-3 rounded-xl font-semibold hover:bg-[#722F37] hover:text-white transition"
+            >
+              Load More
+            </button>
 
-            <div className="text-center py-10">
+          </div>
+        )}
 
-              <div className="inline-flex items-center gap-3 text-gray-500 text-sm sm:text-base">
+      </main>
 
-                <div className="w-5 h-5 border-2 border-gray-300 border-t-[#7A3039] rounded-full animate-spin shrink-0"></div>
+      {/* FOOTER */}
+      <footer className="bg-[#2D2424] text-white">
 
-                <span>
-                  Scroll down to load more shoes...
-                </span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-9 sm:py-12">
 
-              </div>
+          <div className="text-center">
 
-            </div>
+            <h2 className="text-xl sm:text-2xl font-bold">
+              STEPORA
+            </h2>
 
-          )}
-
-        {/* ================= ALL PRODUCTS LOADED ================= */}
-
-        {!loading &&
-          sortedProducts.length > 0 &&
-          visibleProducts.length >=
-            sortedProducts.length && (
-
-            <p className="text-center text-gray-400 py-10 text-sm sm:text-base">
-              You have reached the end of the collection.
+            <p className="text-gray-300 mt-2 text-sm sm:text-base">
+              Step into comfort. Walk with confidence.
             </p>
 
-          )}
+            <p className="text-gray-400 text-xs sm:text-sm mt-5">
+              © 2026 STEPORA
+            </p>
 
-      </section>
-
-      {/* ================= FOOTER ================= */}
-
-      <footer className="bg-[#7A3039] text-white py-8 sm:py-10">
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-
-          <h2 className="text-2xl font-bold mb-2">
-            STEPORA
-          </h2>
-
-          <p className="text-white/80 text-sm sm:text-base">
-            Step into style. Walk with confidence.
-          </p>
-
-          <p className="text-white/60 text-xs sm:text-sm mt-4">
-            © 2026 STEPORA. All rights reserved.
-          </p>
+          </div>
 
         </div>
 
