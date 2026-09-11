@@ -12,81 +12,68 @@ function Home() {
   const [visibleCount, setVisibleCount] = useState(6);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // FETCH PRODUCTS
+  // ================= FETCH PRODUCTS =================
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/products"
-        );
+        let url = "http://localhost:3000/products?active=true";
 
-        setProducts(
-          response.data.filter(
-            (product) => product.active !== false
-          )
-        );
+        // SEARCH
+        if (search.trim() !== "") {
+          url += `&name_like=${encodeURIComponent(search)}`;
+        }
+
+        // CATEGORY
+        if (category !== "All") {
+          url += `&category=${encodeURIComponent(category)}`;
+        }
+
+        // SORT
+        if (sort === "low") {
+          url += "&_sort=price&_order=asc";
+        }
+
+        if (sort === "high") {
+          url += "&_sort=price&_order=desc";
+        }
+
+        const response = await axios.get(url);
+
+        setProducts(response.data);
       } catch (error) {
         console.log("Products fetch error:", error);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [search, category, sort]);
 
-  // LOGOUT
+  // ================= LOGOUT =================
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
 
-  // CATEGORIES
+  // ================= CATEGORIES =================
   const categories = [
     "All",
     ...new Set(products.map((product) => product.category)),
   ];
 
-  // FILTER PRODUCTS
-  let filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name
-      .toLowerCase()
-      .includes(search.toLowerCase());
+  // ================= VISIBLE PRODUCTS =================
+  const visibleProducts = products.slice(0, visibleCount);
 
-    const matchesCategory =
-      category === "All" ||
-      product.category === category;
-
-    return matchesSearch && matchesCategory;
-  });
-
-  // SORT PRODUCTS
-  if (sort === "low") {
-    filteredProducts.sort(
-      (a, b) => Number(a.price) - Number(b.price)
-    );
-  }
-
-  if (sort === "high") {
-    filteredProducts.sort(
-      (a, b) => Number(b.price) - Number(a.price)
-    );
-  }
-
-  const visibleProducts = filteredProducts.slice(
-    0,
-    visibleCount
-  );
-
-  // LOAD MORE
+  // ================= LOAD MORE =================
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 6);
   };
 
-  // RESET VISIBLE COUNT
+  // ================= RESET VISIBLE COUNT =================
   useEffect(() => {
     setVisibleCount(6);
   }, [search, category, sort]);
 
-  // FIND PUMA SMASH V2 FOR HERO
+  // ================= FIND PUMA SMASH V2 FOR HERO =================
   const heroProduct = products.find(
     (product) =>
       product.name.toLowerCase() ===
@@ -304,10 +291,8 @@ function Home() {
 
               <div className="relative bg-[#FDFBF8] rounded-2xl sm:rounded-3xl min-h-[320px] sm:min-h-[400px] lg:min-h-[460px] flex items-center justify-center overflow-hidden shadow-sm">
 
-                {/* DECORATIVE CIRCLE */}
                 <div className="absolute w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full bg-[#E8D7C7]" />
 
-                {/* PUMA SMASH V2 */}
                 {heroProduct && (
                   <img
                     src={heroProduct.image}
@@ -352,8 +337,8 @@ function Home() {
             </div>
 
             <div className="text-sm text-gray-500">
-              {filteredProducts.length}{" "}
-              {filteredProducts.length === 1
+              {products.length}{" "}
+              {products.length === 1
                 ? "product"
                 : "products"}
             </div>
@@ -430,13 +415,13 @@ function Home() {
           </span>{" "}
           of{" "}
           <span className="font-semibold text-[#2D2424]">
-            {filteredProducts.length}
+            {products.length}
           </span>{" "}
           products
         </div>
 
         {/* NO PRODUCTS */}
-        {filteredProducts.length === 0 ? (
+        {products.length === 0 ? (
 
           <div className="bg-white rounded-2xl p-10 sm:p-14 text-center shadow-sm">
 
@@ -466,7 +451,7 @@ function Home() {
                 className="group bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col border border-transparent hover:border-[#E8D7C7]"
               >
 
-                {/* ================= IMAGE ================= */}
+                {/* IMAGE */}
                 <div
                   onClick={() =>
                     navigate(`/product/${product.id}`)
@@ -474,29 +459,25 @@ function Home() {
                   className="relative bg-[#F5F0EA] h-[260px] sm:h-[280px] lg:h-[300px] p-5 sm:p-6 flex items-center justify-center cursor-pointer overflow-hidden"
                 >
 
-                  {/* TOP BADGE */}
                   <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm text-[#722F37] px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase shadow-sm">
                     STEPORA
                   </div>
 
-                  {/* VIEW ICON */}
                   <div className="absolute top-4 right-4 z-10 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-[#722F37] opacity-0 group-hover:opacity-100 transition duration-300 shadow-sm">
                     ↗
                   </div>
 
-                  {/* IMAGE */}
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-contain rounded-xl group-hover:scale-110 transition-transform duration-500 ease-out"
+                    className="w-full h-full object-contain rounded-xl"
                   />
 
                 </div>
 
-                {/* ================= DETAILS ================= */}
+                {/* DETAILS */}
                 <div className="p-5 sm:p-6 flex flex-col flex-1">
 
-                  {/* CATEGORY */}
                   <div className="flex items-center justify-between gap-3">
 
                     <span className="inline-block bg-[#F8F1E7] text-[#722F37] px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider">
@@ -509,17 +490,14 @@ function Home() {
 
                   </div>
 
-                  {/* NAME */}
                   <h3 className="text-xl sm:text-2xl font-bold text-[#2D2424] mt-4 break-words leading-tight">
                     {product.name}
                   </h3>
 
-                  {/* DESCRIPTION */}
                   <p className="text-gray-500 text-sm mt-2 line-clamp-2 leading-relaxed min-h-[40px]">
                     {product.description}
                   </p>
 
-                  {/* PRICE + STOCK */}
                   <div className="flex items-end justify-between gap-3 mt-5">
 
                     <div>
@@ -537,11 +515,13 @@ function Home() {
                       <div className="text-right">
 
                         <div className="flex items-center gap-1.5 justify-end">
+
                           <span className="w-2 h-2 rounded-full bg-green-500" />
 
                           <span className="text-xs sm:text-sm text-green-600 font-semibold">
                             In Stock
                           </span>
+
                         </div>
 
                         <p className="text-[11px] text-gray-400 mt-1">
@@ -566,10 +546,8 @@ function Home() {
 
                   </div>
 
-                  {/* DIVIDER */}
                   <div className="border-t border-gray-100 mt-5 pt-5">
 
-                    {/* VIEW PRODUCT */}
                     <button
                       onClick={() =>
                         navigate(`/product/${product.id}`)
@@ -577,9 +555,11 @@ function Home() {
                       className="w-full bg-[#722F37] text-white py-3.5 rounded-xl font-semibold text-sm sm:text-base hover:bg-[#5E252C] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
                     >
                       View Product
+
                       <span className="group-hover:translate-x-1 transition-transform">
                         →
                       </span>
+
                     </button>
 
                   </div>
@@ -595,7 +575,7 @@ function Home() {
         )}
 
         {/* LOAD MORE */}
-        {visibleCount < filteredProducts.length && (
+        {visibleCount < products.length && (
 
           <div className="flex justify-center mt-9">
 
