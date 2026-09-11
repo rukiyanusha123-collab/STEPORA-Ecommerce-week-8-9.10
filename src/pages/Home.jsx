@@ -39,7 +39,7 @@ function Home() {
     navigate("/login");
   };
 
-  // GET CATEGORIES
+  // CATEGORIES
   const categories = [
     "All",
     ...new Set(products.map((product) => product.category)),
@@ -81,10 +81,17 @@ function Home() {
     setVisibleCount((prev) => prev + 6);
   };
 
-  // RESET PAGINATION WHEN FILTER CHANGES
+  // RESET VISIBLE COUNT
   useEffect(() => {
     setVisibleCount(6);
   }, [search, category, sort]);
+
+  // FIND PUMA SMASH V2 FOR HERO
+  const heroProduct = products.find(
+    (product) =>
+      product.name.toLowerCase() ===
+      "puma smash v2".toLowerCase()
+  );
 
   return (
     <div className="min-h-screen bg-[#F8F1E7]">
@@ -99,7 +106,6 @@ function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 
-          {/* DESKTOP / MAIN NAVBAR */}
           <div className="flex items-center justify-between gap-4">
 
             {/* LOGO */}
@@ -140,7 +146,6 @@ function Home() {
                 My Orders
               </button>
 
-              {/* WISHLIST */}
               <button
                 onClick={() => navigate("/wishlist")}
                 className="text-[#2D2424] hover:text-[#722F37] transition"
@@ -148,7 +153,6 @@ function Home() {
                 Wishlist ❤️
               </button>
 
-              {/* CART */}
               <button
                 onClick={() => navigate("/cart")}
                 className="text-[#2D2424] hover:text-[#722F37] transition"
@@ -156,7 +160,6 @@ function Home() {
                 🛒 Cart
               </button>
 
-              {/* LOGOUT */}
               <button
                 onClick={handleLogout}
                 className="bg-[#722F37] text-white px-5 py-2.5 rounded-lg hover:bg-[#5E252C] transition"
@@ -200,6 +203,7 @@ function Home() {
                       ?.scrollIntoView({
                         behavior: "smooth",
                       });
+
                     setMenuOpen(false);
                   }}
                   className="text-left px-3 py-2 rounded-lg text-[#2D2424] hover:bg-[#F8F1E7] hover:text-[#722F37]"
@@ -217,7 +221,6 @@ function Home() {
                   My Orders
                 </button>
 
-                {/* MOBILE WISHLIST */}
                 <button
                   onClick={() => {
                     navigate("/wishlist");
@@ -254,29 +257,29 @@ function Home() {
 
       </nav>
 
-      {/* HERO SECTION */}
+      {/* ================= HERO SECTION ================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10">
 
         <div className="bg-[#E8D7C7] rounded-2xl sm:rounded-3xl overflow-hidden">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center min-h-[460px]">
 
             {/* HERO TEXT */}
-            <div className="p-6 sm:p-10 lg:p-14">
+            <div className="p-7 sm:p-10 lg:p-14 xl:p-16">
 
-              <p className="text-[#722F37] font-medium text-sm sm:text-base">
+              <p className="text-[#722F37] font-semibold tracking-widest text-sm sm:text-base">
                 STEP INTO STYLE
               </p>
 
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-tight mt-4">
-                Find Your{" "}
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#111827] leading-[1.05] mt-4">
+                Find Your
+                <br />
                 <span className="text-[#722F37]">
-                  Perfect
-                </span>{" "}
-                Pair
+                  Perfect Pair
+                </span>
               </h2>
 
-              <p className="text-gray-600 text-sm sm:text-base lg:text-lg mt-5 max-w-xl leading-relaxed">
+              <p className="text-[#4B5563] text-sm sm:text-base lg:text-lg mt-6 max-w-lg leading-relaxed">
                 Discover stylish and comfortable shoes
                 designed to match your everyday lifestyle.
               </p>
@@ -289,27 +292,29 @@ function Home() {
                       behavior: "smooth",
                     });
                 }}
-                className="mt-7 bg-[#722F37] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-[#5E252C] transition"
+                className="mt-7 bg-[#722F37] text-white px-7 py-3.5 rounded-xl font-semibold hover:bg-[#5E252C] hover:shadow-lg transition duration-300"
               >
                 Shop Now
               </button>
 
             </div>
 
-            {/* HERO IMAGE */}
-            <div className="p-5 sm:p-8 lg:p-10">
+            {/* HERO SHOE IMAGE */}
+            <div className="px-5 sm:px-8 lg:px-12 pb-8 md:pb-0">
 
-              <div className="bg-white rounded-2xl sm:rounded-3xl shadow-md p-5 sm:p-8">
+              <div className="relative bg-[#FDFBF8] rounded-2xl sm:rounded-3xl min-h-[320px] sm:min-h-[400px] lg:min-h-[460px] flex items-center justify-center overflow-hidden shadow-sm">
 
-                <div className="h-[280px] sm:h-[360px] lg:h-[420px] flex items-center justify-center">
+                {/* DECORATIVE CIRCLE */}
+                <div className="absolute w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full bg-[#E8D7C7]" />
 
+                {/* PUMA SMASH V2 - SAME IMAGE FROM db.json */}
+                {heroProduct && (
                   <img
-                    src="https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80"
-                    alt="Featured shoe"
-                    className="w-full h-full object-contain"
+                    src={heroProduct.image}
+                    alt={heroProduct.name}
+                    className="relative z-10 w-[82%] sm:w-[75%] lg:w-[72%] max-h-[330px] sm:max-h-[380px] lg:max-h-[420px] object-contain"
                   />
-
-                </div>
+                )}
 
               </div>
 
@@ -321,7 +326,7 @@ function Home() {
 
       </section>
 
-      {/* PRODUCTS SECTION */}
+      {/* ================= PRODUCTS ================= */}
       <main
         id="products"
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14"
@@ -330,7 +335,7 @@ function Home() {
         {/* SECTION TITLE */}
         <div className="mb-7 sm:mb-9">
 
-          <p className="text-[#722F37] font-medium text-sm sm:text-base">
+          <p className="text-[#722F37] font-medium text-sm sm:text-base tracking-wide">
             OUR COLLECTION
           </p>
 
@@ -373,10 +378,14 @@ function Home() {
             onChange={(e) => setSort(e.target.value)}
             className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#722F37]"
           >
-            <option value="">Sort By Price</option>
+            <option value="">
+              Sort By Price
+            </option>
+
             <option value="low">
               Price: Low to High
             </option>
+
             <option value="high">
               Price: High to Low
             </option>
@@ -392,6 +401,7 @@ function Home() {
 
         {/* NO PRODUCTS */}
         {filteredProducts.length === 0 ? (
+
           <div className="bg-white rounded-2xl p-10 text-center shadow-sm">
 
             <h3 className="text-xl font-semibold text-[#2D2424]">
@@ -403,6 +413,7 @@ function Home() {
             </p>
 
           </div>
+
         ) : (
 
           /* PRODUCT GRID */
@@ -412,10 +423,10 @@ function Home() {
 
               <div
                 key={product.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col"
+                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col"
               >
 
-                {/* IMAGE */}
+                {/* PRODUCT IMAGE */}
                 <div
                   onClick={() =>
                     navigate(`/product/${product.id}`)
@@ -486,6 +497,7 @@ function Home() {
 
         {/* LOAD MORE */}
         {visibleCount < filteredProducts.length && (
+
           <div className="flex justify-center mt-8">
 
             <button
@@ -496,6 +508,7 @@ function Home() {
             </button>
 
           </div>
+
         )}
 
       </main>
