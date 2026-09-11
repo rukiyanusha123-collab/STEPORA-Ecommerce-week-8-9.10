@@ -751,30 +751,7 @@
     {
       "userId": "j1BomRWSTL8",
       "userEmail": "husna123@gmail.com",
-      "items": [
-        {
-          "id": "1",
-          "name": "Nike Air Max",
-          "price": 4999,
-          "category": "Running",
-          "image": "/images/adidas1.jpg",
-          "description": "Comfortable running shoe",
-          "stock": 10,
-          "size": "6",
-          "quantity": 1
-        },
-        {
-          "id": "10",
-          "name": "New Balance 574",
-          "price": 5799,
-          "category": "Casual",
-          "image": "/images/asics28.jpg",
-          "description": "Comfortable everyday lifestyle shoe",
-          "stock": 13,
-          "size": "6",
-          "quantity": 1
-        }
-      ],
+      "items": [],
       "id": "6GrcsBAmluM"
     }
   ],
