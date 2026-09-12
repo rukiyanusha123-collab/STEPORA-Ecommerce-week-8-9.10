@@ -678,125 +678,20 @@
       "password": "786764",
       "role": "user",
       "id": "-5gZzR5CAt4"
+    },
+    {
+      "name": "husna ",
+      "email": "husnafih@gmail.com",
+      "password": "husnafihu",
+      "role": "user",
+      "id": "2GbD6Unu0Hc"
     }
   ],
   "orders": [
-    {
-      "userId": "I6Tq6yGg840",
-      "userEmail": "rukiyanusha123@gmail.com",
-      "customer": {
-        "name": "Rukiya Nusha",
-        "address": "rose villa",
-        "city": "kusgdbac",
-        "pincode": "123454",
-        "phone": "2324354354"
-      },
-      "items": [
-        {
-          "id": "2",
-          "name": "Adidas Ultraboost",
-          "price": 5999,
-          "category": "Running",
-          "image": "/images/asics26.jpg",
-          "description": "Lightweight running shoe with responsive cushioning",
-          "stock": 15,
-          "size": "6",
-          "quantity": 1
-        }
-      ],
-      "subtotal": 5999,
-      "shipping": 0,
-      "total": 5999,
-      "status": "Pending",
-      "date": "2026-09-04T16:36:27.070Z",
-      "id": "_yHw8_3zZLQ"
-    },
-    {
-      "userId": "-5gZzR5CAt4",
-      "userEmail": "sumi@gmail.com",
-      "customer": {
-        "name": "sumayya",
-        "address": "pirambillykudy ",
-        "city": "vengola",
-        "pincode": "123454",
-        "phone": "9539999786"
-      },
-      "items": [
-        {
-          "id": "28",
-          "name": "Nike Infinity Run",
-          "price": 7299,
-          "category": "Running",
-          "image": "/images/nike6.jpg",
-          "description": "Cushioned running shoe for long distances",
-          "stock": 9,
-          "size": "8",
-          "quantity": 1
-        }
-      ],
-      "subtotal": 7299,
-      "shipping": 0,
-      "total": 7299,
-      "status": "Pending",
-      "date": "2026-09-11T14:49:22.677Z",
-      "id": "eenl20LxFpg"
-    }
+    
   ],
   "carts": [
-    {
-      "userId": "WBCvmZ3mrmA",
-      "userEmail": "muaadh123@gmail.com",
-      "items": [],
-      "id": "kU16ybkY8B8"
-    },
-    {
-      "userId": "WBCvmZ3mrmA",
-      "userEmail": "muaadh123@gmail.com",
-      "items": [],
-      "id": "6Jh3LEFNYB8"
-    },
-    {
-      "userId": "admin1",
-      "userEmail": "admin@stepora.com",
-      "items": [],
-      "id": "aMBQeCgSYos"
-    },
-    {
-      "userId": "I6Tq6yGg840",
-      "userEmail": "rukiyanusha123@gmail.com",
-      "items": [
-        {
-          "id": "2",
-          "name": "Adidas Ultraboost",
-          "price": 5999,
-          "category": "Running",
-          "image": "/images/asics26.jpg",
-          "description": "Lightweight running shoe with responsive cushioning",
-          "stock": 15,
-          "size": "6",
-          "quantity": 1
-        }
-      ],
-      "id": "7tZ2pLj7BEk"
-    },
-    {
-      "userId": "I6Tq6yGg840",
-      "userEmail": "rukiyanusha123@gmail.com",
-      "items": [],
-      "id": "IQ6Y6-uPZ9E"
-    },
-    {
-      "userId": "j1BomRWSTL8",
-      "userEmail": "husna123@gmail.com",
-      "items": [],
-      "id": "6GrcsBAmluM"
-    },
-    {
-      "userId": "-5gZzR5CAt4",
-      "userEmail": "sumi@gmail.com",
-      "items": [],
-      "id": "8erxaYCwyl4"
-    }
+   
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }
