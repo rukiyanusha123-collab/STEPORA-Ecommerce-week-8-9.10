@@ -687,11 +687,7 @@
       "id": "2GbD6Unu0Hc"
     }
   ],
-  "orders": [
-    
-  ],
-  "carts": [
-   
-  ],
+  "orders": [],
+  "carts": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

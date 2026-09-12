@@ -1,4 +1,9 @@
-import { useEffect, useState } from "react";
+
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +31,8 @@ function AdminProducts() {
 
   const [editingProduct, setEditingProduct] =
     useState(null);
+
+  const editSectionRef = useRef(null);
 
   // ================= POPUP =================
 
@@ -133,6 +140,13 @@ function AdminProducts() {
     setEditingProduct({
       ...product,
     });
+
+    setTimeout(() => {
+      editSectionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
   };
 
   // ================= UPDATE PRODUCT =================
@@ -417,7 +431,10 @@ function AdminProducts() {
         {/* ================= EDIT PRODUCT ================= */}
 
         {editingProduct && (
-          <div className="bg-white rounded-2xl shadow-md p-6 mb-8 border-2 border-slate-300">
+          <div
+            ref={editSectionRef}
+            className="bg-white rounded-2xl shadow-md p-6 mb-8 border-2 border-slate-300"
+          >
 
             <div className="flex justify-between items-center mb-5">
 
@@ -725,9 +742,7 @@ function AdminProducts() {
 
                             <button
                               onClick={() =>
-                                handleEdit(
-                                  product
-                                )
+                                handleEdit(product)
                               }
                               className="px-3 py-1.5 text-sm rounded-md bg-slate-800 text-white hover:bg-slate-700 transition"
                             >
