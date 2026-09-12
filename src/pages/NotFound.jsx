@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 function NotFound() {
-  const navigate = useNavigate(
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-[#F8F1E7] flex items-center justify-center px-4">
