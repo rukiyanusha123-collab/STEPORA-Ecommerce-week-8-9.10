@@ -7,8 +7,6 @@ function AdminUsers() {
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Selected user for viewing details
   const [selectedUser, setSelectedUser] = useState(null);
 
   // Fetch users
@@ -30,12 +28,12 @@ function AdminUsers() {
     fetchUsers();
   }, []);
 
-  // View individual user
+  // View user details
   const handleViewUser = (user) => {
     setSelectedUser(user);
   };
 
-  // Close user details
+  // Close details modal
   const handleCloseDetails = () => {
     setSelectedUser(null);
   };
@@ -50,9 +48,8 @@ function AdminUsers() {
         }
       );
 
-      fetchUsers();
+      await fetchUsers();
 
-      // Update selected user if popup is open
       if (selectedUser && selectedUser.id === user.id) {
         setSelectedUser({
           ...selectedUser,
@@ -77,9 +74,8 @@ function AdminUsers() {
         }
       );
 
-      fetchUsers();
+      await fetchUsers();
 
-      // Update selected user if popup is open
       if (selectedUser && selectedUser.id === user.id) {
         setSelectedUser({
           ...selectedUser,
@@ -97,19 +93,17 @@ function AdminUsers() {
   return (
     <div className="min-h-screen bg-slate-100">
 
-      {/* ================= SIDEBAR ================= */}
+      {/* ================= DESKTOP SIDEBAR ================= */}
 
       <aside className="fixed left-0 top-0 h-screen w-64 bg-slate-900 text-white hidden md:flex flex-col">
 
         <div className="h-20 flex items-center px-6 border-b border-slate-700">
-
           <h1
             onClick={() => navigate("/admin")}
             className="text-2xl font-bold cursor-pointer"
           >
             STEPORA
           </h1>
-
         </div>
 
         <div className="flex-1 px-4 py-6">
@@ -140,35 +134,33 @@ function AdminUsers() {
           </button>
 
         </div>
-
       </aside>
 
       {/* ================= MOBILE HEADER ================= */}
 
       <div className="md:hidden bg-slate-900 text-white px-4 py-4">
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-3">
 
-          <h1 className="text-xl font-bold">
+          <h1 className="text-lg sm:text-xl font-bold">
             STEPORA ADMIN
           </h1>
 
           <button
             onClick={() => navigate("/admin")}
-            className="text-sm bg-slate-700 px-4 py-2 rounded-lg"
+            className="text-sm bg-slate-700 px-3 py-2 rounded-lg whitespace-nowrap"
           >
             Dashboard
           </button>
 
         </div>
-
       </div>
 
-      {/* ================= MAIN ================= */}
+      {/* ================= MAIN CONTENT ================= */}
 
       <main className="md:ml-64 min-h-screen">
 
-        <header className="bg-white border-b border-slate-200 px-6 py-5">
+        <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-5">
 
           <p className="text-sm text-slate-500">
             Admin Panel
@@ -180,25 +172,23 @@ function AdminUsers() {
 
         </header>
 
-        <section className="max-w-7xl mx-auto px-6 py-8">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
           {loading ? (
 
             <div className="bg-white rounded-2xl p-10 text-center shadow-sm">
-
               <p className="text-slate-500">
                 Loading users...
               </p>
-
             </div>
 
           ) : (
 
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
 
-              {/* ================= TABLE HEADER ================= */}
+              {/* ================= TITLE ================= */}
 
-              <div className="p-6 border-b border-slate-200">
+              <div className="p-5 sm:p-6 border-b border-slate-200">
 
                 <h3 className="text-xl font-bold text-slate-900">
                   Registered Users
@@ -210,9 +200,11 @@ function AdminUsers() {
 
               </div>
 
-              {/* ================= TABLE ================= */}
+              {/* ================================================= */}
+              {/* DESKTOP TABLE - visible from md screen onwards */}
+              {/* ================================================= */}
 
-              <div className="overflow-x-auto">
+              <div className="hidden md:block overflow-x-auto">
 
                 <table className="w-full">
 
@@ -287,8 +279,6 @@ function AdminUsers() {
 
                           <div className="flex flex-col gap-1">
 
-                            {/* Active / Inactive */}
-
                             <span
                               className={`w-fit px-3 py-1 rounded-full text-sm font-semibold ${
                                 user.active === false
@@ -301,14 +291,10 @@ function AdminUsers() {
                                 : "Active"}
                             </span>
 
-                            {/* Blocked */}
-
                             {user.blocked && (
-
                               <span className="w-fit px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
                                 Blocked
                               </span>
-
                             )}
 
                           </div>
@@ -321,47 +307,31 @@ function AdminUsers() {
 
                           <div className="flex gap-2 flex-wrap">
 
-                            {/* VIEW */}
-
                             <button
-                              onClick={() =>
-                                handleViewUser(user)
-                              }
+                              onClick={() => handleViewUser(user)}
                               className="px-3 py-1.5 text-sm rounded-md bg-slate-800 text-white hover:bg-slate-700 transition"
                             >
                               View
                             </button>
 
-                            {/* BLOCK / UNBLOCK */}
-
                             <button
-                              onClick={() =>
-                                handleBlockToggle(user)
-                              }
+                              onClick={() => handleBlockToggle(user)}
                               className={`px-3 py-1.5 text-sm rounded-md transition ${
                                 user.blocked
                                   ? "bg-green-100 text-green-700 hover:bg-green-200"
                                   : "bg-red-100 text-red-700 hover:bg-red-200"
                               }`}
                             >
-                              {user.blocked
-                                ? "Unblock"
-                                : "Block"}
+                              {user.blocked ? "Unblock" : "Block"}
                             </button>
 
-                            {/* SOFT DELETE */}
-
                             {user.active !== false && (
-
                               <button
-                                onClick={() =>
-                                  handleSoftDelete(user)
-                                }
+                                onClick={() => handleSoftDelete(user)}
                                 className="px-3 py-1.5 text-sm rounded-md bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
                               >
                                 Delete
                               </button>
-
                             )}
 
                           </div>
@@ -375,6 +345,118 @@ function AdminUsers() {
                   </tbody>
 
                 </table>
+
+              </div>
+
+              {/* ================================================= */}
+              {/* MOBILE CARDS - visible below md screen */}
+              {/* ================================================= */}
+
+              <div className="md:hidden p-4 space-y-4">
+
+                {users.map((user) => (
+
+                  <div
+                    key={user.id}
+                    className="border border-slate-200 rounded-xl p-4 shadow-sm"
+                  >
+
+                    {/* USER NAME */}
+
+                    <div className="flex justify-between items-start gap-3">
+
+                      <div className="min-w-0">
+
+                        <h4 className="font-bold text-slate-900 text-base break-words">
+                          {user.name}
+                        </h4>
+
+                        <p className="text-sm text-slate-500 break-all mt-1">
+                          {user.email}
+                        </p>
+
+                      </div>
+
+                      <span
+                        className={`shrink-0 px-2 py-1 rounded-full text-xs font-semibold ${
+                          user.role === "admin"
+                            ? "bg-purple-100 text-purple-700"
+                            : "bg-slate-100 text-slate-700"
+                        }`}
+                      >
+                        {user.role || "user"}
+                      </span>
+
+                    </div>
+
+                    {/* STATUS */}
+
+                    <div className="flex flex-wrap gap-2 mt-4">
+
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          user.active === false
+                            ? "bg-slate-200 text-slate-600"
+                            : "bg-green-100 text-green-700"
+                        }`}
+                      >
+                        {user.active === false
+                          ? "Inactive"
+                          : "Active"}
+                      </span>
+
+                      {user.blocked && (
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                          Blocked
+                        </span>
+                      )}
+
+                    </div>
+
+                    {/* MOBILE ACTION BUTTONS */}
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-4">
+
+                      <button
+                        onClick={() => handleViewUser(user)}
+                        className="w-full px-3 py-2 text-sm rounded-lg bg-slate-800 text-white hover:bg-slate-700 transition"
+                      >
+                        View
+                      </button>
+
+                      <button
+                        onClick={() => handleBlockToggle(user)}
+                        className={`w-full px-3 py-2 text-sm rounded-lg font-semibold transition ${
+                          user.blocked
+                            ? "bg-green-100 text-green-700 hover:bg-green-200"
+                            : "bg-red-100 text-red-700 hover:bg-red-200"
+                        }`}
+                      >
+                        {user.blocked ? "Unblock" : "Block"}
+                      </button>
+
+                      {user.active !== false ? (
+
+                        <button
+                          onClick={() => handleSoftDelete(user)}
+                          className="w-full px-3 py-2 text-sm rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition"
+                        >
+                          Delete
+                        </button>
+
+                      ) : (
+
+                        <div className="w-full px-3 py-2 text-sm rounded-lg bg-slate-100 text-slate-400 text-center">
+                          Inactive
+                        </div>
+
+                      )}
+
+                    </div>
+
+                  </div>
+
+                ))}
 
               </div>
 
@@ -392,11 +474,11 @@ function AdminUsers() {
 
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center px-4 z-50">
 
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-xl p-6">
+          <div className="bg-white w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl shadow-xl p-5 sm:p-6">
 
             {/* MODAL HEADER */}
 
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-6 gap-3">
 
               <h3 className="text-xl font-bold text-slate-900">
                 User Details
@@ -420,7 +502,7 @@ function AdminUsers() {
                   User ID
                 </p>
 
-                <p className="font-semibold text-slate-900">
+                <p className="font-semibold text-slate-900 break-all">
                   {selectedUser.id}
                 </p>
               </div>
@@ -430,7 +512,7 @@ function AdminUsers() {
                   Name
                 </p>
 
-                <p className="font-semibold text-slate-900">
+                <p className="font-semibold text-slate-900 break-words">
                   {selectedUser.name}
                 </p>
               </div>
@@ -440,7 +522,7 @@ function AdminUsers() {
                   Email
                 </p>
 
-                <p className="font-semibold text-slate-900">
+                <p className="font-semibold text-slate-900 break-all">
                   {selectedUser.email}
                 </p>
               </div>
@@ -473,28 +555,30 @@ function AdminUsers() {
                 </span>
               </div>
 
-              {selectedUser.blocked && (
+              <div>
+                <p className="text-sm text-slate-500">
+                  Block Status
+                </p>
 
-                <div>
-                  <p className="text-sm text-slate-500">
-                    Block Status
-                  </p>
-
-                  <span className="inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
-                    Blocked
-                  </span>
-                </div>
-
-              )}
+                <span
+                  className={`inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold ${
+                    selectedUser.blocked
+                      ? "bg-red-100 text-red-700"
+                      : "bg-green-100 text-green-700"
+                  }`}
+                >
+                  {selectedUser.blocked
+                    ? "Blocked"
+                    : "Not Blocked"}
+                </span>
+              </div>
 
             </div>
 
             {/* BLOCK / UNBLOCK */}
 
             <button
-              onClick={() =>
-                handleBlockToggle(selectedUser)
-              }
+              onClick={() => handleBlockToggle(selectedUser)}
               className={`w-full mt-6 py-3 rounded-lg font-semibold transition ${
                 selectedUser.blocked
                   ? "bg-green-600 text-white hover:bg-green-700"
@@ -511,9 +595,7 @@ function AdminUsers() {
             {selectedUser.active !== false && (
 
               <button
-                onClick={() => {
-                  handleSoftDelete(selectedUser);
-                }}
+                onClick={() => handleSoftDelete(selectedUser)}
                 className="w-full mt-3 bg-slate-200 text-slate-700 py-3 rounded-lg font-semibold hover:bg-slate-300 transition"
               >
                 Mark Inactive

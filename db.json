@@ -7,7 +7,8 @@
       "category": "Running",
       "image": "/images/adidas1.jpg",
       "description": "Comfortable running shoe",
-      "stock": 10
+      "stock": 10,
+      "active": true
     },
     {
       "id": "2",
@@ -16,7 +17,8 @@
       "category": "Running",
       "image": "/images/asics26.jpg",
       "description": "Lightweight running shoe with responsive cushioning",
-      "stock": 15
+      "stock": 7,
+      "active": true
     },
     {
       "id": "3",
@@ -663,14 +665,16 @@
       "email": "rukiyanusha123@gmail.com",
       "password": "rukiyanusha123",
       "role": "user",
-      "blocked": false
+      "blocked": false,
+      "active": true
     },
     {
       "name": "Husna",
       "email": "husna123@gmail.com",
       "password": "husna123",
       "role": "user",
-      "id": "j1BomRWSTL8"
+      "id": "j1BomRWSTL8",
+      "active": true
     },
     {
       "name": "Sumayya ",
@@ -688,6 +692,13 @@
     }
   ],
   "orders": [],
-  "carts": [],
+  "carts": [
+    {
+      "userId": "I6Tq6yGg840",
+      "userEmail": "rukiyanusha123@gmail.com",
+      "items": [],
+      "id": "VoZD69neQ2c"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
